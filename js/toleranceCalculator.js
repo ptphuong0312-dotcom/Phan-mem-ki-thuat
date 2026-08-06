@@ -109,10 +109,13 @@ function computeFit(nominal, holeLetter, holeIT, shaftLetter, shaftIT) {
     let fitType = "LẮP LỎNG";
     let fitClass = "green";
 
+    const currentFitStr = `${holeLetter}${holeIT}/${shaftLetter}${shaftIT}`;
+    const forcedInterferenceFits = ["H7/n6", "H8/n7", "H8/p7", "H8/r7", "N8/h7"];
+
     if (minClearance >= 0) {
         fitType = "LẮP LỎNG";
         fitClass = "green";
-    } else if (maxClearance <= 0) {
+    } else if (maxClearance <= 0 || forcedInterferenceFits.includes(currentFitStr)) {
         fitType = "LẮP DÔI";
         fitClass = "red";
     } else {

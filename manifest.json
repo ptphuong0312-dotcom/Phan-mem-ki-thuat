@@ -1,0 +1,16 @@
+{
+  "name": "Tra Cứu Ren",
+  "short_name": "Tra Cứu Ren",
+  "description": "Siêu ứng dụng tra cứu thông số ren cơ khí, tính toán phôi tiện và đo lường AR/OCR.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#ffb74d",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3238/3238803.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

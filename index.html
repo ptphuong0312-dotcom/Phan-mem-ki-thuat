@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tra Cứu Ren Thông Minh</title>
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#121212">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3238/3238803.png">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container" id="appContainer">
+        <header>
+            <h1>TRA CỨU REN</h1>
+            <p>Trợ lý cơ khí xưởng - Offline Mode</p>
+        </header>
+
+        
+        <!-- Main Section: REN -->
+        <div id="sectionRen" class="main-section active">
+            <div class="segmented-control">
+                <button class="seg-btn active" data-target="tabSearch">Tra Cứu</button>
+                <button class="seg-btn" data-target="tabReverse">Tra Ngược</button>
+                <button class="seg-btn" data-target="tabCamera">Camera</button>
+            </div>
+
+            <!-- Tab 1: Tra Cứu Tiêu Chuẩn -->
+        <div id="tabSearch" class="tab-content active">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Gõ tên ren (vd: M8, 1/4)..." autocomplete="off">
+                <select id="systemFilter" class="system-filter">
+                    <option value="All">Tất cả hệ ren</option>
+                    <option value="ISO Metric">Hệ Mét (ISO)</option>
+                    <option value="Unified Inch (UN/UNC/UNF)">Hệ Inch (UN/UNC/UNF)</option>
+                    <option value="Pipe Thread">Ren Ống (Pipe)</option>
+                    <option value="Trapezoidal / ACME">Ren Thang (Trapezoidal/ACME)</option>
+                    <option value="Whitworth / British">Ren Anh (Whitworth)</option>
+                    <option value="Specialty">Hệ Khác</option>
+                </select>
+            </div>
+            <div id="resultsContainer" class="results-container"></div>
+        </div>
+
+        <!-- Tab 2: Tra Cứu Ngược -->
+        <div id="tabReverse" class="tab-content">
+            <h2 class="section-title">Tra Cứu Ngược</h2>
+            <p class="section-desc">Nhập đường kính bạn đo được bằng thước kẹp, app sẽ đoán đó là ren gì.</p>
+            <div class="reverse-form">
+                <input type="number" id="measuredDia" class="search-input" placeholder="Đường kính đo được (mm)..." step="0.01">
+                <select id="threadPlacement" class="system-filter">
+                    <option value="external">Ren Ngoài (Đo đỉnh ren bulong)</option>
+                    <option value="internal">Ren Trong (Đo lỗ taro)</option>
+                </select>
+                <select id="reverseSystemFilter" class="system-filter">
+                    <option value="All">Khoanh vùng: Tất cả hệ ren</option>
+                    <option value="ISO Metric">Hệ Mét (ISO)</option>
+                    <option value="Unified Inch (UN/UNC/UNF)">Hệ Inch (UN/UNC/UNF)</option>
+                    <option value="Pipe Thread">Ren Ống (Pipe)</option>
+                    <option value="Trapezoidal / ACME">Ren Thang (Trapezoidal/ACME)</option>
+                    <option value="Whitworth / British">Ren Anh (Whitworth)</option>
+                    <option value="Specialty">Hệ Khác</option>
+                </select>
+                <button id="btnReverseSearch" class="action-btn">Tìm Ren Gần Nhất</button>
+            </div>
+            <div id="reverseResultsContainer" class="results-container mt-20"></div>
+        </div>
+
+        
+            <!-- Tab 3: Camera & OCR -->
+        <div id="tabCamera" class="tab-content">
+            <h2 class="section-title">Tiện Ích Camera</h2>
+            <div class="camera-grid">
+                <div class="tool-card" id="btnArGauge">
+                    <div class="tool-icon">📏</div>
+                    <div class="tool-title">Thước Đo AR</div>
+                    <div class="tool-desc">Đo bước ren qua Camera</div>
+                </div>
+                <div class="tool-card" id="btnOcrScan">
+                    <div class="tool-icon">📸</div>
+                    <div class="tool-title">Quét Bản Vẽ OCR</div>
+                    <div class="tool-desc">Đọc thông số từ giấy</div>
+                </div>
+            </div>
+            <div id="cameraWorkspace" class="camera-workspace hidden mt-20">
+                <div id="arSection" class="hidden">
+                    <p class="section-desc">Đưa camera vào ren, điều chỉnh lưới cho khớp bước ren.</p>
+                    <div class="video-container" style="position: relative; width: 100%; max-width: 400px; margin: 0 auto; overflow: hidden; border-radius: 12px; border: 2px solid var(--accent);">
+                        <video id="arVideo" autoplay playsinline style="width: 100%; display: block;"></video>
+                        <canvas id="arCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;"></canvas>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <input type="range" id="gridSlider" min="0.5" max="5.0" step="0.1" value="1.0" style="width: 80%;">
+                        <p>Kích thước lưới: <span id="gridVal">1.0</span> mm</p>
+                    </div>
+                </div>
+                
+                <div id="ocrSection" class="hidden text-center">
+                    <p class="section-desc">Chụp ảnh bản vẽ hoặc chọn ảnh từ máy để quét.</p>
+                    <input type="file" id="ocrInput" accept="image/*" class="search-input" style="padding: 10px;">
+                    <select id="ocrSystemFilter" class="system-filter" style="margin-top: 15px;">
+                        <option value="All">Khoanh vùng: Tất cả hệ ren</option>
+                        <option value="ISO Metric">Hệ Mét (ISO)</option>
+                        <option value="Unified Inch (UN/UNC/UNF)">Hệ Inch (UN/UNC/UNF)</option>
+                        <option value="Pipe Thread">Ren Ống (Pipe)</option>
+                        <option value="Trapezoidal / ACME">Ren Thang (Trapezoidal/ACME)</option>
+                        <option value="Whitworth / British">Ren Anh (Whitworth)</option>
+                        <option value="Specialty">Hệ Khác</option>
+                    </select>
+                    <button id="btnRunOcr" class="action-btn">Bắt Đầu Quét OCR</button>
+                    <div id="ocrStatus" style="margin-top: 15px; color: var(--accent);"></div>
+                    <div id="ocrResults" class="results-container mt-20 text-left"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Main Section: DUNG SAI -->
+        <div id="sectionTolerance" class="main-section">
+        <!-- Tab 4: Dung Sai ISO 286 (Modulus Metal Clone) -->
+        <div id="tabTolerance" class="tab-content active">
+            <h2 class="section-title">ISO 286 Lỗ & Trục</h2>
+            <p class="section-desc">Công cụ tra cứu và tính toán chuẩn ISO 286-1 & ISO 286-2 cho Lỗ và Trục</p>
+
+            <div class="iso-widget">
+                <div class="iso-tab-nav">
+                    <button class="iso-tab-nav-btn active" onclick="switchIsoTab('shaftDevPanel')">Dung Sai Trục</button>
+                    <button class="iso-tab-nav-btn" onclick="switchIsoTab('holeDevPanel')">Dung Sai Lỗ</button>
+                    <button class="iso-tab-nav-btn" onclick="switchIsoTab('holeSysPanel')">Hệ Thống Lỗ Cơ Bản</button>
+                    <button class="iso-tab-nav-btn" onclick="switchIsoTab('shaftSysPanel')">Hệ Thống Trục Cơ Bản</button>
+                </div>
+
+                <!-- PANEL 1 -->
+                <div id="shaftDevPanel" class="iso-panel-body active">
+                    <div class="iso-controls-bar">
+                        <label for="shaftNominalInput">Kích thước danh nghĩa (mm):</label>
+                        <input type="number" id="shaftNominalInput" value="100" min="0.1" max="3150" step="0.1" oninput="updateShaftPanel()">
+                    </div>
+                    <div class="iso-matrix-container">
+                        <div class="iso-matrix-legend">
+                            <div class="iso-legend-item"><div class="iso-legend-badge" style="background: var(--preferred-bg);"></div> Ưu tiên</div>
+                            <div class="iso-legend-item"><div class="iso-legend-badge" style="background: var(--common-bg);"></div> Phổ biến</div>
+                            <div class="iso-legend-item"><div class="iso-legend-badge" style="background: var(--standard-bg);"></div> Tiêu chuẩn</div>
+                        </div>
+                        <div class="iso-matrix-grid-box" id="shaftGridBox"></div>
+                    </div>
+                    <div class="iso-output-card-box">
+                        <h3>Kết Quả Dung Sai Trục: <span id="shaftSelectedTitle" class="highlight-orange">h6</span></h3>
+                        <div class="iso-result-grid-layout">
+                            <div class="iso-res-item-card orange"><div class="title-txt">Sai lệch trên (es)</div><div class="value-txt highlight-orange" id="shaftEsTxt">0.000 mm</div></div>
+                            <div class="iso-res-item-card orange"><div class="title-txt">Sai lệch dưới (ei)</div><div class="value-txt highlight-orange" id="shaftEiTxt">-0.022 mm</div></div>
+                            <div class="iso-res-item-card orange"><div class="title-txt">Dung sai chuẩn (IT)</div><div class="value-txt highlight-orange" id="shaftItTxt">0.022 mm</div></div>
+                            <div class="iso-res-item-card"><div class="title-txt">Kích thước lớn nhất</div><div class="value-txt" id="shaftMaxTxt">100.000 mm</div></div>
+                            <div class="iso-res-item-card"><div class="title-txt">Kích thước nhỏ nhất</div><div class="value-txt" id="shaftMinTxt">99.978 mm</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 2 -->
+                <div id="holeDevPanel" class="iso-panel-body">
+                    <div class="iso-controls-bar">
+                        <label for="holeNominalInput">Kích thước danh nghĩa (mm):</label>
+                        <input type="number" id="holeNominalInput" value="100" min="0.1" max="3150" step="0.1" oninput="updateHolePanel()">
+                    </div>
+                    <div class="iso-matrix-container">
+                        <div class="iso-matrix-legend">
+                            <div class="iso-legend-item"><div class="iso-legend-badge" style="background: var(--preferred-bg);"></div> Ưu tiên</div>
+                            <div class="iso-legend-item"><div class="iso-legend-badge" style="background: var(--common-bg);"></div> Phổ biến</div>
+                            <div class="iso-legend-item"><div class="iso-legend-badge" style="background: var(--standard-bg);"></div> Tiêu chuẩn</div>
+                        </div>
+                        <div class="iso-matrix-grid-box" id="holeGridBox"></div>
+                    </div>
+                    <div class="iso-output-card-box">
+                        <h3>Kết Quả Dung Sai Lỗ: <span id="holeSelectedTitle" class="highlight-orange">H6</span></h3>
+                        <div class="iso-result-grid-layout">
+                            <div class="iso-res-item-card orange"><div class="title-txt">Sai lệch trên (ES)</div><div class="value-txt highlight-orange" id="holeEsTxt">+0.022 mm</div></div>
+                            <div class="iso-res-item-card orange"><div class="title-txt">Sai lệch dưới (EI)</div><div class="value-txt highlight-orange" id="holeEiTxt">0.000 mm</div></div>
+                            <div class="iso-res-item-card orange"><div class="title-txt">Dung sai chuẩn (IT)</div><div class="value-txt highlight-orange" id="holeItTxt">0.022 mm</div></div>
+                            <div class="iso-res-item-card"><div class="title-txt">Kích thước lớn nhất</div><div class="value-txt" id="holeMaxTxt">100.022 mm</div></div>
+                            <div class="iso-res-item-card"><div class="title-txt">Kích thước nhỏ nhất</div><div class="value-txt" id="holeMinTxt">100.000 mm</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 3 -->
+                <div id="holeSysPanel" class="iso-panel-body">
+                    <div class="iso-controls-bar">
+                        <label for="holeSysNominalInput">Kích thước danh nghĩa (mm):</label>
+                        <input type="number" id="holeSysNominalInput" value="100" min="0.1" max="3150" step="0.1" oninput="updateHoleSysPanel()">
+                    </div>
+                    <div class="iso-fit-matrix-wrapper"><table class="iso-fit-table" id="holeSysFitTable"></table></div>
+                    <div class="fit-summary-layout mt-20">
+                        <div class="fit-summary-left">
+                            <h3 class="summary-title">Chi Tiết Kiểu Lắp Ghép</h3>
+                            <div class="fvc-container">
+                                <div class="fvc-left-col">
+                                    <span class="fvc-lbl">Kích thước danh nghĩa:</span>
+                                </div>
+                                <div class="fvc-middle-col">
+                                    <div class="fvc-middle-top">
+                                        <span class="fvc-val" id="holeSysFvcNominal">100</span>
+                                    </div>
+                                    <div class="fvc-middle-bottom"></div>
+                                </div>
+                                <div class="fvc-right-col">
+                                    <div class="fvc-right-top">
+                                        <span class="fvc-cls" id="holeSysFvcHoleClass">H7</span>
+                                        <div class="fvc-dev-col">
+                                            <span id="holeSysFvcHoleES">+0.022</span>
+                                            <span id="holeSysFvcHoleEI">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="fvc-right-bottom">
+                                        <span class="fvc-cls" id="holeSysFvcShaftClass">g6</span>
+                                        <div class="fvc-dev-col">
+                                            <span id="holeSysFvcShaftEs">-0.012</span>
+                                            <span id="holeSysFvcShaftEi">-0.034</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fit-type-badge green" id="holeSysFitType">LẮP LỎNG</div>
+                            <div class="fit-clearance-info" id="holeSysClearanceInfo"></div>
+                        </div>
+                        <div class="fit-summary-right">
+                            <div class="iso-chart-wrapper small-chart">
+                                <svg id="holeSysSvg" viewBox="0 0 500 220">
+                                    <line x1="40" y1="110" x2="440" y2="110" class="iso-zero-axis" />
+                                    <text x="448" y="114" font-size="11" fill="#94a3b8" font-weight="700">0</text>
+                                    <rect id="holeSysSvgHoleRect" x="140" y="60" width="80" height="50" class="iso-hole-zone" />
+                                    <text id="holeSysSvgHoleLabel" x="180" y="50" font-size="12" text-anchor="middle" fill="#38bdf8" font-weight="700">Lỗ (H7)</text>
+                                    <rect id="holeSysSvgShaftRect" x="280" y="110" width="80" height="40" class="iso-shaft-zone" />
+                                    <text id="holeSysSvgShaftLabel" x="320" y="165" font-size="12" text-anchor="middle" fill="#fb923c" font-weight="700">Trục (g6)</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 4 -->
+                <div id="shaftSysPanel" class="iso-panel-body">
+                    <div class="iso-controls-bar">
+                        <label for="shaftSysNominalInput">Kích thước danh nghĩa (mm):</label>
+                        <input type="number" id="shaftSysNominalInput" value="100" min="0.1" max="3150" step="0.1" oninput="updateShaftSysPanel()">
+                    </div>
+                    <div class="iso-fit-matrix-wrapper"><table class="iso-fit-table" id="shaftSysFitTable"></table></div>
+                    <div class="fit-summary-layout mt-20">
+                        <div class="fit-summary-left">
+                            <h3 class="summary-title">Chi Tiết Kiểu Lắp Ghép</h3>
+                            <div class="fvc-container">
+                                <div class="fvc-left-col">
+                                    <span class="fvc-lbl">Kích thước danh nghĩa:</span>
+                                </div>
+                                <div class="fvc-middle-col">
+                                    <div class="fvc-middle-top">
+                                        <span class="fvc-val" id="shaftSysFvcNominal">100</span>
+                                    </div>
+                                    <div class="fvc-middle-bottom"></div>
+                                </div>
+                                <div class="fvc-right-col">
+                                    <div class="fvc-right-top">
+                                        <span class="fvc-cls" id="shaftSysFvcHoleClass">H7</span>
+                                        <div class="fvc-dev-col">
+                                            <span id="shaftSysFvcHoleES">+0.022</span>
+                                            <span id="shaftSysFvcHoleEI">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="fvc-right-bottom">
+                                        <span class="fvc-cls" id="shaftSysFvcShaftClass">h6</span>
+                                        <div class="fvc-dev-col">
+                                            <span id="shaftSysFvcShaftEs">0</span>
+                                            <span id="shaftSysFvcShaftEi">-0.022</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fit-type-badge green" id="shaftSysFitType">LẮP LỎNG</div>
+                            <div class="fit-clearance-info" id="shaftSysClearanceInfo"></div>
+                        </div>
+                        <div class="fit-summary-right">
+                            <div class="iso-chart-wrapper small-chart">
+                                <svg id="shaftSysSvg" viewBox="0 0 500 220">
+                                    <line x1="40" y1="110" x2="440" y2="110" class="iso-zero-axis" />
+                                    <text x="448" y="114" font-size="11" fill="#94a3b8" font-weight="700">0</text>
+                                    <rect id="shaftSysSvgHoleRect" x="140" y="60" width="80" height="50" class="iso-hole-zone" />
+                                    <text id="shaftSysSvgHoleLabel" x="180" y="50" font-size="12" text-anchor="middle" fill="#38bdf8" font-weight="700">Lỗ (H7)</text>
+                                    <rect id="shaftSysSvgShaftRect" x="280" y="110" width="80" height="40" class="iso-shaft-zone" />
+                                    <text id="shaftSysSvgShaftLabel" x="320" y="165" font-size="12" text-anchor="middle" fill="#fb923c" font-weight="700">Trục (g6)</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="main-nav-item active" data-target="sectionRen">
+            <div class="nav-icon">🔩</div>
+            <span>THÔNG SỐ REN</span>
+        </a>
+        <a href="#" class="main-nav-item" data-target="sectionTolerance">
+            <div class="nav-icon">📐</div>
+            <span>DUNG SAI ISO</span>
+        </a>
+    </nav>
+
+
+    <!-- Modal Vẽ 2D -->
+    <div id="drawingModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modalThreadTitle">M8x1.25</h2>
+            <div class="canvas-container">
+                <canvas id="threadCanvas" width="300" height="200"></canvas>
+            </div>
+            <div class="turning-info">
+                <p>Đường kính phôi tiện ngoài: <span id="turningDia" class="highlight-value"></span></p>
+                <p>Lỗ khoan taro: <span id="modalTapDrill" class="highlight-value"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tesseract JS cho OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+    <script src="js/data.js"></script>
+    <script src="js/iso286_data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/reverseLookup.js"></script>
+    <script src="js/toleranceCalculator.js"></script>
+    <script src="js/drawProfile.js"></script>
+    <script src="js/cameraUtils.js"></script>
+</body>
+</html>

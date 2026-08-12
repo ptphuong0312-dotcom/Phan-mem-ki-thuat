@@ -1,0 +1,72 @@
+/* CSS dành riêng cho phần Độ Nhám Bề Mặt */
+
+#sectionRoughness {
+    /* Đảm bảo tab độ nhám sử dụng chiều rộng tối đa */
+    width: 100%;
+    margin-bottom: 80px; /* Tránh bị che bởi bottom nav */
+}
+
+/* Các tuỳ chỉnh lớp CSS từ Tailwind nhưng cần bảo vệ hoặc viết lại do xung đột */
+#sectionRoughness .tab-active {
+    background-color: #0891b2; /* cyan-600 */
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+#sectionRoughness .tab-inactive {
+    background-color: #1e293b; /* slate-800 */
+    color: #cbd5e1; /* slate-300 */
+}
+
+#sectionRoughness .tab-inactive:hover {
+    background-color: #334155; /* slate-700 */
+}
+
+/* 
+  Khắc phục một số styles cơ bản của trình duyệt bị Tailwind preflight bỏ lỡ
+  do ta thiết lập preflight: false
+*/
+#sectionRoughness button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+#sectionRoughness input, 
+#sectionRoughness select {
+    background-color: #020617; /* slate-950 */
+    border: 1px solid #334155; /* slate-700 */
+    border-radius: 0.75rem; /* xl */
+    padding: 0.625rem;
+    color: white;
+}
+
+#sectionRoughness input:focus, 
+#sectionRoughness select:focus {
+    border-color: #06b6d4; /* cyan-500 */
+    outline: none;
+}
+
+#sectionRoughness table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+#sectionRoughness th, 
+#sectionRoughness td {
+    padding: 0.625rem;
+}
+
+#sectionRoughness thead tr {
+    border-bottom: 1px solid #1e293b;
+}
+
+#sectionRoughness tbody tr {
+    border-bottom: 1px solid rgba(30, 41, 59, 0.6); /* slate-800/60 */
+}
+
+#sectionRoughness tbody tr:hover {
+    background-color: rgba(30, 41, 59, 0.4);
+}

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         displayData.forEach(item => {
-            const isPopular = item.priority === 100;
+            const isPopular = item.type.toLowerCase().includes("coarse") || item.type.toLowerCase().includes("unc");
             const card = document.createElement('div');
             card.className = isPopular ? 'result-card highlight-card' : 'result-card';
             card.setAttribute('data-id', item.id);
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <div class="card-header">
                     <div class="thread-size">${item.size}</div>
-                    <div class="thread-type ${isPopular ? 'popular-type' : ''}">${item.type}</div>
+                    <div class="thread-type ${isPopular ? 'popular-type' : ''}">${isPopular ? '⭐ ' + item.type : item.type}</div>
                 </div>
                 <div class="data-grid">
                     <div class="data-item">

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cokhixuong-pwa-v3';
+const CACHE_NAME = 'cokhixuong-pwa-v12';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

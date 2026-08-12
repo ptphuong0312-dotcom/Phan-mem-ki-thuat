@@ -33,70 +33,132 @@ function getIT(itGrade, size) {
     return table[idx] / 1000.0;
 }
 
-function getFundamentalDeviation(letter, size, itVal) {
+function getFundamentalDeviation(letter, size, itVal, itGrade) {
     const isUpper = letter[0] === letter[0].toUpperCase();
     const l = letter.toLowerCase();
     const idx = getSizeIndex(size);
 
     let devUm = 0;
     switch(l) {
-        case 'a': devUm = -270 - size*0.5; break;
-        case 'b': devUm = -140 - size*0.3; break;
-        case 'c': devUm = -60 - size*0.2; break;
+        case 'a': devUm = [-270, -270, -280, -290, -300, -320, -360, -410, -580, -820, -1050, -1350, -1650][idx]; break;
+        case 'b': devUm = [-140, -140, -150, -150, -160, -180, -200, -240, -310, -420, -540, -680, -840][idx]; break;
+        case 'c': devUm = [-60, -70, -80, -95, -110, -130, -150, -180, -230, -280, -330, -400, -480][idx]; break;
+        case 'cd': devUm = [-32, -46, -56, -95, -110, -130, -150, -180, -230, -280, -330, -400, -480][idx]; break;
         case 'd': devUm = [-20, -30, -40, -50, -65, -80, -100, -120, -145, -170, -190, -210, -230][idx]; break;
         case 'e': devUm = [-14, -20, -25, -32, -40, -50, -60, -72, -85, -100, -110, -125, -135][idx]; break;
+        case 'ef': devUm = [-10, -14, -18, -32, -40, -50, -60, -72, -85, -100, -110, -125, -135][idx]; break;
         case 'f': devUm = [-6, -10, -13, -16, -20, -25, -30, -36, -43, -50, -56, -62, -68][idx]; break;
+        case 'fg': devUm = [-4, -6, -8, -16, -20, -25, -30, -36, -43, -50, -56, -62, -68][idx]; break;
         case 'g': devUm = [-2, -4, -5, -6, -7, -9, -10, -12, -14, -15, -17, -18, -20][idx]; break;
-        case 'h': case 'js': devUm = 0; break;
-        case 'j': devUm = 0; break; // Simplified for J
-        case 'k': devUm = 0; break; // Simplified for K
+        case 'h': devUm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0][idx]; break;
+        case 'j': devUm = [-4, -4, -5, -6, -8, -10, -12, -15, -18, -21, -26, -28, -32][idx]; break;
+        case 'k': devUm = [0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5][idx]; break;
         case 'm': devUm = [2, 4, 6, 7, 8, 9, 11, 13, 15, 17, 20, 21, 23][idx]; break;
-        case 'n': devUm = [4, 8, 10, 12, 15, 17, 20, 23, 27, 31, 37, 40, 43][idx]; break;
-        case 'p': devUm = [6, 12, 15, 18, 22, 26, 32, 37, 43, 51, 60, 65, 71][idx]; break;
-        case 'r': devUm = [10, 16, 20, 23, 28, 34, 41, 48, 60, 73, 86, 95, 104][idx]; break;
-        case 's': devUm = [14, 20, 27, 33, 41, 48, 60, 72, 93, 117, 140, 160, 180][idx]; break;
-        case 't': devUm = [18, 24, 32, 40, 48, 54, 73, 90, 118, 148, 180, 210, 240][idx]; break;
-        case 'u': devUm = [20, 28, 37, 45, 54, 64, 88, 112, 148, 190, 236, 280, 320][idx]; break;
-        case 'v': devUm = [22, 32, 43, 52, 64, 78, 108, 140, 188, 245, 308, 360, 420][idx]; break;
-        case 'x': devUm = [26, 40, 56, 70, 86, 106, 150, 200, 275, 360, 450, 530, 620][idx]; break;
-        case 'y': devUm = [30, 48, 70, 88, 110, 136, 198, 268, 370, 490, 620, 740, 870][idx]; break;
-        case 'z': devUm = [36, 60, 86, 110, 140, 176, 258, 350, 490, 650, 820, 980, 1150][idx]; break;
+        case 'n': devUm = [4, 8, 10, 12, 15, 17, 20, 23, 27, 31, 34, 37, 40][idx]; break;
+        case 'p': devUm = [6, 12, 15, 18, 22, 26, 32, 37, 43, 50, 56, 62, 68][idx]; break;
+        case 'r': devUm = [10, 15, 19, 23, 28, 34, 43, 54, 68, 84, 98, 114, 132][idx]; break;
+        case 's': devUm = [14, 19, 23, 28, 35, 43, 59, 79, 108, 140, 170, 208, 252][idx]; break;
+        case 't': devUm = [18, 23, 28, 33, 41, 54, 75, 104, 146, 196, 240, 294, 360][idx]; break;
+        case 'u': devUm = [18, 23, 28, 33, 48, 70, 102, 144, 210, 284, 350, 435, 540][idx]; break;
+        case 'v': devUm = [20, 28, 34, 39, 55, 81, 120, 172, 252, 340, 425, 530, 660][idx]; break;
+        case 'x': devUm = [20, 28, 34, 45, 64, 97, 146, 210, 310, 425, 525, 660, 820][idx]; break;
+        case 'y': devUm = [0, 0, 0, 0, 75, 114, 174, 254, 380, 520, 650, 820, 1000][idx]; break;
+        case 'z': devUm = [0, 0, 0, 0, 88, 136, 210, 310, 465, 640, 790, 1000, 1250][idx]; break;
+        case 'za': devUm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1000, 1300, 1600][idx]; break;
+        case 'zb': devUm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1300, 1650, 2100][idx]; break;
+        case 'zc': devUm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1700, 2100, 2600][idx]; break;
         default: devUm = 0;
     }
-
+    
+    if (!devUm) devUm = 0;
     const devMm = devUm / 1000.0;
 
     if (isUpper) {
-        // Hole
-        if (['A','B','C','D','E','F','G','H'].includes(letter)) {
-            const EI = Math.abs(devMm);
+        const L = letter.toUpperCase();
+        if (['A','B','C','CD','D','E','EF','F','FG','G','H'].includes(L)) {
+            const EI = -devMm; 
             return { ES: EI + itVal, EI: EI };
-        } else if (letter === 'JS') {
+        } else if (['JS', 'J'].includes(L) && itGrade >= 9) {
+            return { ES: itVal / 2.0, EI: -itVal / 2.0 };
+        } else if (L === 'J') {
+            const J_ES = {
+                6: [2, 5, 5, 6, 8, 10, 13, 16, 18, 22, 25, 29],
+                7: [4, 6, 8, 10, 12, 14, 18, 22, 26, 30, 36, 39],
+                8: [6, 10, 12, 15, 20, 24, 28, 34, 41, 47, 55, 60]
+            };
+            if (J_ES[itGrade] && idx < 12) {
+                const ES = J_ES[itGrade][idx] / 1000.0;
+                return { ES: ES, EI: ES - itVal };
+            }
+            return { ES: itVal / 2.0, EI: -itVal / 2.0 };
+        } else if (L === 'JS') {
             return { ES: itVal / 2.0, EI: -itVal / 2.0 };
         } else {
-            const ES = -Math.abs(devMm);
+            let deltaMm = 0;
+            if (itGrade >= 3 && itGrade <= 8) {
+                const DELTA_VALUES = [
+                    [0, 0, 0, 0, 0, 0],
+                    [1, 1.5, 1, 3, 4, 6],
+                    [1, 1.5, 2, 3, 6, 7],
+                    [1, 2, 3, 3, 7, 9],
+                    [1.5, 2, 3, 4, 8, 12],
+                    [1.5, 3, 4, 5, 9, 14],
+                    [2, 3, 5, 6, 11, 16],
+                    [2, 4, 5, 7, 13, 19],
+                    [3, 4, 6, 7, 15, 23],
+                    [3, 4, 6, 9, 17, 26],
+                    [4, 4, 7, 9, 20, 29],
+                    [4, 5, 7, 11, 21, 32],
+                    [5, 5, 7, 13, 23, 34]
+                ];
+                
+                let applies = false;
+                if (['K','M','N'].includes(L) && itGrade <= 8) applies = true;
+                if (['P','R','S','T','U','V','X','Y','Z','ZA','ZB','ZC'].includes(L) && itGrade <= 7) applies = true;
+                
+                if (applies) {
+                    deltaMm = DELTA_VALUES[idx][itGrade - 3] / 1000.0;
+                }
+            }
+            
+            if (['K', 'M', 'N'].includes(L) && itGrade >= 9) { return { ES: 0, EI: -itVal }; }
+            
+            const ES = -devMm + deltaMm;
             return { ES: ES, EI: ES - itVal };
         }
     } else {
-        // Shaft
-        if (['a','b','c','d','e','f','g','h'].includes(l)) {
-            const es = -Math.abs(devMm);
-            return { es: es, ei: es - itVal };
+        if (['a','b','c','cd','d','e','ef','f','fg','g','h'].includes(l)) {
+            return { es: devMm, ei: devMm - itVal };
+        } else if (['js', 'j'].includes(l) && itGrade >= 9) {
+            return { es: itVal / 2.0, ei: -itVal / 2.0 };
+        } else if (l === 'j') {
+            const j_es = {
+                5: [2, 3, 3, 4, 5, 5, 6, 7, 9, 10, 13, 14],
+                6: [2, 5, 5, 6, 8, 10, 13, 16, 18, 22, 25, 29],
+                7: [4, 6, 8, 10, 12, 14, 18, 22, 26, 30, 36, 39],
+                8: [6, 10, 12, 15, 20, 24, 28, 34, 41, 47, 55, 60]
+            };
+            if (j_es[itGrade] && idx < 12) {
+                const es = j_es[itGrade][idx] / 1000.0;
+                return { es: es, ei: es - itVal };
+            }
+            return { es: itVal / 2.0, ei: -itVal / 2.0 };
         } else if (l === 'js') {
             return { es: itVal / 2.0, ei: -itVal / 2.0 };
         } else {
-            const ei = Math.abs(devMm);
-            return { es: ei + itVal, ei: ei };
+            if (l === 'k' && itGrade >= 4 && itGrade <= 7) {
+                return { es: itVal, ei: 0 };
+            }
+            return { es: devMm + itVal, ei: devMm };
         }
     }
 }
-
 function computeFit(nominal, holeLetter, holeIT, shaftLetter, shaftIT) {
     const hIT = getIT(parseInt(holeIT), nominal);
     const sIT = getIT(parseInt(shaftIT), nominal);
 
-    const holeDev = getFundamentalDeviation(holeLetter, nominal, hIT);
-    const shaftDev = getFundamentalDeviation(shaftLetter, nominal, sIT);
+    const holeDev = getFundamentalDeviation(holeLetter, nominal, hIT, parseInt(holeIT));
+    const shaftDev = getFundamentalDeviation(shaftLetter, nominal, sIT, parseInt(shaftIT));
 
     const holeMax = nominal + holeDev.ES;
     const holeMin = nominal + holeDev.EI;
@@ -253,7 +315,7 @@ function updateShaftPanel() {
     if (!m) return;
 
     const itVal = getIT(parseInt(m[2]), nominal);
-    const dev = getFundamentalDeviation(m[1], nominal, itVal);
+    const dev = getFundamentalDeviation(m[1], nominal, itVal, parseInt(m[2]));
 
     document.getElementById('shaftSelectedTitle').innerText = selectedShaftClass;
     document.getElementById('shaftEsTxt').innerText = fmt(dev.es, 3, true);
@@ -304,7 +366,7 @@ function updateHolePanel() {
     if (!m) return;
 
     const itVal = getIT(parseInt(m[2]), nominal);
-    const dev = getFundamentalDeviation(m[1], nominal, itVal);
+    const dev = getFundamentalDeviation(m[1], nominal, itVal, parseInt(m[2]));
 
     document.getElementById('holeSelectedTitle').innerText = selectedHoleClass;
     document.getElementById('holeEsTxt').innerText = fmt(dev.ES, 3, true);
@@ -361,7 +423,12 @@ function updateHoleSysPanel() {
 
     const fit = computeFit(nominal, hMatch[1], hMatch[2], sMatch[1], sMatch[2]);
 
-    const fmtDev = (val) => val === 0 ? "0" : (val > 0 ? "+" + val.toFixed(3) : val.toFixed(3));
+    const fmtDev = (val) => {
+        if (val === 0) return "0";
+        let str = val.toFixed(4);
+        if (str.endsWith('0')) str = str.slice(0, -1);
+        return val > 0 ? "+" + str : str;
+    };
 
     document.getElementById('holeSysFvcNominal').innerText = nominal;
     document.getElementById('holeSysFvcHoleClass').innerText = fit.hole.letter + fit.hole.it;
@@ -377,6 +444,10 @@ function updateHoleSysPanel() {
     badge.className = `fit-type-badge ${fit.fitClass}`;
     
     document.getElementById('holeSysClearanceInfo').innerHTML = generateClearanceHtml(fit);
+    
+    if (typeof getFitApplicationHtml === 'function') {
+        document.getElementById('holeSysFitApp').innerHTML = getFitApplicationHtml(selectedHoleSysPair.hole, selectedHoleSysPair.shaft);
+    }
     
     renderSvgChart(fit, 'holeSys');
 }
@@ -428,7 +499,12 @@ function updateShaftSysPanel() {
 
     const fit = computeFit(nominal, hMatch[1], hMatch[2], sMatch[1], sMatch[2]);
 
-    const fmtDev = (val) => val === 0 ? "0" : (val > 0 ? "+" + val.toFixed(3) : val.toFixed(3));
+    const fmtDev = (val) => {
+        if (val === 0) return "0";
+        let str = val.toFixed(4);
+        if (str.endsWith('0')) str = str.slice(0, -1);
+        return val > 0 ? "+" + str : str;
+    };
 
     document.getElementById('shaftSysFvcNominal').innerText = nominal;
     document.getElementById('shaftSysFvcHoleClass').innerText = fit.hole.letter + fit.hole.it;
@@ -444,6 +520,10 @@ function updateShaftSysPanel() {
     badge.className = `fit-type-badge ${fit.fitClass}`;
     
     document.getElementById('shaftSysClearanceInfo').innerHTML = generateClearanceHtml(fit);
+    
+    if (typeof getFitApplicationHtml === 'function') {
+        document.getElementById('shaftSysFitApp').innerHTML = getFitApplicationHtml(selectedShaftSysPair.hole, selectedShaftSysPair.shaft);
+    }
     
     renderSvgChart(fit, 'shaftSys');
 }

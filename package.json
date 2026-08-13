@@ -1,0 +1,20 @@
+{
+  "name": "tra-cuu-ren",
+  "version": "1.0.0",
+  "description": "",
+  "main": "find_hole_bugs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptphuong0312-dotcom/Phan-mem-ki-thuat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ptphuong0312-dotcom/Phan-mem-ki-thuat/issues"
+  },
+  "homepage": "https://github.com/ptphuong0312-dotcom/Phan-mem-ki-thuat#readme"
+}

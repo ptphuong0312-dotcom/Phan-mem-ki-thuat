@@ -1,0 +1,172 @@
+function getIT(itGrade, size) {
+    if (size <= 0) return 0;
+    let target = null;
+    for (let key in isoClean.IT) {
+        let entry = isoClean.IT[key];
+        if (size > entry.min && size <= entry.max) {
+            target = entry;
+            break;
+        }
+    }
+    if (!target) return 0;
+    const val = target.vals[itGrade];
+    return val ? val / 1000.0 : 0;
+}
+
+const ISO_DELTA = [
+    // IT1 to IT8 (indices 0 to 7), sizes match the 14 standard ranges
+    [0,   0,   3,   4,   5,   6,   7,   8],  // 0-3
+    [0,   3,   0,   0,   0,   0,   0,   0],  // 3-6 (IT3-IT8 are 0)
+    [3,   6,   1, 1.5,   1,   3,   4,   6],  // 6-10
+    [6,  10,   1, 1.5,   2,   3,   6,   7],  // 10-14 (Note: IT7 is 6, IT8 is 7)
+    [10, 18,   1,   2,   3,   3,   7,   9],  // 14-18
+    [18, 30, 1.5,   2,   3,   4,   8,  12],  // 18-30
+    [30, 50, 1.5,   3,   4,   5,   9,  14],  // 30-50
+    [50, 80,   2,   3,   5,   6,  11,  16],  // 50-80
+    [80,120,   2,   4,   5,   7,  13,  19],  // 80-120
+    [120,180,  3,   4,   6,   7,  15,  23],  // 120-180
+    [180,250,  3,   4,   6,   9,  17,  26],  // 180-250
+    [250,315,  4,   4,   7,   9,  20,  29],  // 250-315
+    [315,400,  4,   5,   7,  11,  21,  32],  // 315-400
+    [400,500,  5,   5,   7,  13,  23,  34]   // 400-500
+];
+
+function getDelta(letter, itGrade, size) {
+    if (size <= 3) return 0;
+    const l = letter.toLowerCase();
+    
+    let applyDelta = false;
+    if (['k', 'm', 'n'].includes(l) && itGrade <= 8) applyDelta = true;
+    if (['p', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'za', 'zb', 'zc'].includes(l) && itGrade <= 7) applyDelta = true;
+    
+    if (applyDelta && itGrade >= 1 && itGrade <= 8) {
+        let rowIdx = 0;
+        if (size <= 3) rowIdx = 0;
+        else if (size <= 6) rowIdx = 1;
+        else if (size <= 10) rowIdx = 2;
+        else if (size <= 14) rowIdx = 3;
+        else if (size <= 18) rowIdx = 4;
+        else if (size <= 30) rowIdx = 5;
+        else if (size <= 50) rowIdx = 6;
+        else if (size <= 80) rowIdx = 7;
+        else if (size <= 120) rowIdx = 8;
+        else if (size <= 180) rowIdx = 9;
+        else if (size <= 250) rowIdx = 10;
+        else if (size <= 315) rowIdx = 11;
+        else if (size <= 400) rowIdx = 12;
+        else if (size <= 500) rowIdx = 13;
+        
+        let deltaVal = ISO_DELTA[rowIdx][itGrade - 1];
+        
+        // Exceptional rules for Delta
+        if (itGrade === 7 && size > 18 && size <= 30 && ['k', 'm', 'n'].includes(l)) {
+            // Note: delta is 8um. Table already has 8 at [5][6].
+            deltaVal = 8;
+        }
+        if (itGrade === 6 && size > 250 && size <= 315 && ['k', 'm', 'n'].includes(l)) {
+            // K, M, N at IT6 250-315mm -> delta is 11 (table has 9)
+            if (l === 'k' || l === 'm' || l === 'n') deltaVal = 11;
+        }
+        if (itGrade === 6 && size > 18 && size <= 30 && l === 's') {
+            deltaVal = 4; // already 4 in table
+        }
+        
+        return Math.round(deltaVal); // Return as integer um
+    }
+    return 0;
+}
+
+function getFundamentalDeviation(letter, size, itVal, itGrade) {
+    const isUpper = letter[0] === letter[0].toUpperCase();
+    const l = letter.toLowerCase();
+    
+    if (l === 'js') {
+        if (isUpper) return { ES: itVal / 2.0, EI: -itVal / 2.0 };
+        else return { es: itVal / 2.0, ei: -itVal / 2.0 };
+    }
+
+    const isoSource = isUpper ? isoClean.Hole : isoClean.Shaft;
+    const lData = isoSource[l];
+
+    if (!lData) {
+        return { ES: 0, EI: 0 };
+    }
+
+    let devUm = 0;
+    let isSymmetric = false;
+    
+    if (l === 'j') {
+        let val = 7777;
+        const targetObj = isUpper ? isoClean.Hole['j'] : isoClean.Shaft['j'];
+        if (targetObj) {
+            for (let row of targetObj) {
+                if (size > row.min && size <= row.max) {
+                    if (isUpper) {
+                        if (itGrade === 6) val = row.vals[1];
+                        else if (itGrade === 7) val = row.vals[2];
+                        else if (itGrade === 8) val = row.vals[3];
+                        else val = 7777;
+                    } else {
+                        if (itGrade === 5) val = row.vals[1];
+                        else if (itGrade === 6) val = row.vals[2];
+                        else if (itGrade === 7) val = row.vals[3];
+                        else val = 7777;
+                    }
+                    break;
+                }
+            }
+        }
+        if (val !== 7777 && val !== null) {
+            devUm = val;
+        } else {
+            isSymmetric = true;
+        }
+    } else {
+        let found = false;
+        for (let r of lData) {
+            if (size > r.min && size <= r.max) {
+                devUm = r.val;
+                found = true;
+                break;
+            }
+        }
+        if (!found || devUm === 9999 || devUm === 7777) {
+            devUm = 0;
+        }
+    }
+    
+    if (isSymmetric) {
+        if (isUpper) return { ES: itVal / 2.0, EI: -itVal / 2.0 };
+        else return { es: itVal / 2.0, ei: -itVal / 2.0 };
+    }
+
+    const devMm = devUm / 1000.0;
+
+    if (isUpper) {
+        if (['a','b','c','cd','d','e','ef','f','fg','g','h'].includes(l)) {
+            const EI = Math.abs(devMm);
+            return { ES: EI + itVal, EI: EI };
+        } else if (l === 'j') {
+            const ES = devMm; 
+            return { ES: ES, EI: ES - itVal };
+        } else {
+            const deltaMm = getDelta(l, itGrade, size) / 1000.0;
+            let ES = -Math.abs(devMm) + deltaMm;
+            if ((l === 'n' || l === 'k') && itGrade >= 9) {
+                ES = 0;
+            }
+            return { ES: ES, EI: ES - itVal };
+        }
+    } else {
+        if (['a','b','c','cd','d','e','ef','f','fg','g','h'].includes(l)) {
+            const es = -Math.abs(devMm);
+            return { es: es, ei: es - itVal };
+        } else if (l === 'j') {
+            const ei = devMm; 
+            return { es: ei + itVal, ei: ei };
+        } else {
+            const ei = Math.abs(devMm);
+            return { es: ei + itVal, ei: ei };
+        }
+    }
+}

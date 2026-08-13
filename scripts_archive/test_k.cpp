@@ -1,0 +1,33 @@
+#include <iostream>
+
+int main() {
+    double delta[14][8]= {
+      {0,   0,   3,   4, 5,  6,   7,  8},
+      {0,   3,   0,   0, 0,	0,   0,	 0},
+      {3,   6,   1, 1.5, 1,	3,   4,	 6},
+      {6,  10,   1, 1.5, 2,	3,   6,	 7},
+      {10,  18,   1,   2, 3,	3,   7,	 9},
+      {18,  30, 1.5,   2, 3,	4,   8,	12},
+      {30,  50, 1.5,   3, 4,	5,   9,	14},
+      {50,  80,   2,   3, 5,	6,  11,	16},
+      {80, 120,   2,   4, 5,	7,  13,	19},
+      {120, 180,   3,   4, 6,	7,  15,	23},
+      {180, 250,   3,   4, 6,	9,  17,	26},
+      {250, 315,   4,   4, 7,  9,  20, 29},
+      {315, 400,   4,   5, 7, 11,  21, 32},
+      {400, 500,   5,   5, 7, 13,  23, 34}
+    };
+    
+    // For 12mm (10-18 row), row index 4.
+    // For K8, IT = 8.
+    double rewer = delta[4][8-1]; // = 9
+    double deltawert = rewer / 1000.0;
+    
+    // Hole K calculation (assume ei for Shaft k is 1um)
+    // ES = -ei + delta
+    double ei_shaft = 0.001; 
+    double es_hole = -ei_shaft + deltawert;
+    
+    std::cout << "K8 ES = " << es_hole * 1000 << " um" << std::endl;
+    return 0;
+}

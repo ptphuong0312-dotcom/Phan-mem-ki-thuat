@@ -359,16 +359,40 @@ const IsoCalcV2 = (function() {
 
 // UI Binding
 window.runIsoCalcV2 = function() {
-    const inputStr = document.getElementById('calcInputStr').value;
-    const parsed = IsoCalcV2.parseInput(inputStr);
+    const size = parseFloat(document.getElementById('calcNominal').value);
+    const hl = document.getElementById('calcHoleLetter').value;
+    const hi = document.getElementById('calcHoleIT').value;
+    const sl = document.getElementById('calcShaftLetter').value;
+    const si = document.getElementById('calcShaftIT').value;
+    
     const errObj = document.getElementById('calcErrorMsg');
     const outObj = document.getElementById('calcOutputArea');
     const titleObj = document.getElementById('calcResultTitle');
     const typeObj = document.getElementById('calcFitType');
     const gridObj = document.getElementById('calcGridRes');
 
+    if (isNaN(size) || size <= 0 || size > 3150) {
+        errObj.style.display = 'block';
+        errObj.innerText = "Lỗi: Kích thước phải nằm trong khoảng 0.1mm - 3150mm.";
+        outObj.style.display = 'none';
+        return;
+    }
+    
+    let parsed = null;
+    let validHole = hl !== '-' && hi !== '-';
+    let validShaft = sl !== '-' && si !== '-';
+    
+    if (validHole && validShaft) {
+        parsed = { mode: 'fit', size, hole: { letter: hl, it: parseInt(hi) }, shaft: { letter: sl, it: parseInt(si) } };
+    } else if (validHole) {
+        parsed = { mode: 'single', size, isHole: true, letter: hl, it: parseInt(hi) };
+    } else if (validShaft) {
+        parsed = { mode: 'single', size, isHole: false, letter: sl, it: parseInt(si) };
+    }
+
     if (!parsed) {
         errObj.style.display = 'block';
+        errObj.innerText = "Lỗi: Vui lòng chọn ít nhất một Lỗ hoặc Trục hợp lệ.";
         outObj.style.display = 'none';
         return;
     }
@@ -424,7 +448,7 @@ window.runIsoCalcV2 = function() {
     } else {
         const fit = IsoCalcV2.calculateFit(parsed.size, parsed.hole.letter, parsed.hole.it, parsed.shaft.letter, parsed.shaft.it);
         if (!fit) {
-            titleObj.innerText = `Không áp dụng cho ${inputStr}`;
+            titleObj.innerText = `Không áp dụng cho ${parsed.size}${parsed.hole.letter}${parsed.hole.it}/${parsed.shaft.letter}${parsed.shaft.it}`;
             IsoCalcV2.drawDiagram('calcDiagramCanvas', null);
             return;
         }

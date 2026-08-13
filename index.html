@@ -393,13 +393,62 @@
 
                 <!-- PANEL 5: TÍNH TOÁN DUNG SAI ĐỘC LẬP -->
                 <div id="calcPanel" class="iso-panel-body">
-                    <div class="iso-controls-bar" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                        <label for="calcInputStr">Nhập Lỗ/Trục (vd: 30H7/g6, 50 h6):</label>
-                        <input type="text" id="calcInputStr" value="30H7/g6" placeholder="Ví dụ: 30H7/g6" style="width: 250px; padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; font-size: 16px;" onkeydown="if(event.key === 'Enter') window.runIsoCalcV2()">
-                        <button onclick="window.runIsoCalcV2()" style="padding: 8px 16px; background: #0ea5e9; color: white; border-radius: 6px; font-weight: 600; cursor: pointer;">Tính Toán V2</button>
+                    <div class="iso-controls-bar" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap; background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155;">
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                            <label style="color: #94a3b8; font-size: 13px;">Kích thước danh nghĩa (mm):</label>
+                            <input type="number" id="calcNominal" value="30" min="0.1" max="3150" step="0.1" style="width: 120px; padding: 6px; border-radius: 4px; border: 1px solid #475569; background: #1e293b; color: white;" oninput="window.runIsoCalcV2()">
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 5px; border-left: 1px solid #334155; padding-left: 15px;">
+                            <label style="color: #38bdf8; font-size: 13px; font-weight: bold;">LỖ (Hole)</label>
+                            <div style="display: flex; gap: 5px;">
+                                <select id="calcHoleLetter" style="width: 70px; padding: 6px; border-radius: 4px; border: 1px solid #475569; background: #1e293b; color: white;" onchange="window.runIsoCalcV2()">
+                                    <option value="-">-</option>
+                                    <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="CD">CD</option>
+                                    <option value="D">D</option><option value="E">E</option><option value="EF">EF</option><option value="F">F</option>
+                                    <option value="FG">FG</option><option value="G">G</option><option value="H" selected>H</option><option value="J">J</option>
+                                    <option value="JS">JS</option><option value="K">K</option><option value="M">M</option><option value="N">N</option>
+                                    <option value="P">P</option><option value="R">R</option><option value="S">S</option><option value="T">T</option>
+                                    <option value="U">U</option><option value="V">V</option><option value="X">X</option><option value="Y">Y</option>
+                                    <option value="Z">Z</option><option value="ZA">ZA</option><option value="ZB">ZB</option><option value="ZC">ZC</option>
+                                </select>
+                                <select id="calcHoleIT" style="width: 70px; padding: 6px; border-radius: 4px; border: 1px solid #475569; background: #1e293b; color: white;" onchange="window.runIsoCalcV2()">
+                                    <option value="-">-</option>
+                                    <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                    <option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option>
+                                    <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                    <option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option>
+                                    <option value="17">17</option><option value="18">18</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 5px; border-left: 1px solid #334155; padding-left: 15px;">
+                            <label style="color: #fb923c; font-size: 13px; font-weight: bold;">TRỤC (Shaft)</label>
+                            <div style="display: flex; gap: 5px;">
+                                <select id="calcShaftLetter" style="width: 70px; padding: 6px; border-radius: 4px; border: 1px solid #475569; background: #1e293b; color: white;" onchange="window.runIsoCalcV2()">
+                                    <option value="-">-</option>
+                                    <option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="cd">cd</option>
+                                    <option value="d">d</option><option value="e">e</option><option value="ef">ef</option><option value="f">f</option>
+                                    <option value="fg">fg</option><option value="g" selected>g</option><option value="h">h</option><option value="j">j</option>
+                                    <option value="js">js</option><option value="k">k</option><option value="m">m</option><option value="n">n</option>
+                                    <option value="p">p</option><option value="r">r</option><option value="s">s</option><option value="t">t</option>
+                                    <option value="u">u</option><option value="v">v</option><option value="x">x</option><option value="y">y</option>
+                                    <option value="z">z</option><option value="za">za</option><option value="zb">zb</option><option value="zc">zc</option>
+                                </select>
+                                <select id="calcShaftIT" style="width: 70px; padding: 6px; border-radius: 4px; border: 1px solid #475569; background: #1e293b; color: white;" onchange="window.runIsoCalcV2()">
+                                    <option value="-">-</option>
+                                    <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                    <option value="5">5</option><option value="6" selected>6</option><option value="7">7</option><option value="8">8</option>
+                                    <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                    <option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option>
+                                    <option value="17">17</option><option value="18">18</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
-                    <div id="calcErrorMsg" style="color: #ef4444; margin: 15px 0; font-weight: bold; display: none;">Lỗi: Cú pháp không hợp lệ. Vui lòng nhập đúng định dạng (vd: 30H7/g6 hoặc 50h6).</div>
+                    <div id="calcErrorMsg" style="color: #ef4444; margin: 15px 0; font-weight: bold; display: none;">Lỗi: Dữ liệu không hợp lệ. Vui lòng chọn ít nhất một Lỗ hoặc Trục hợp lệ.</div>
 
                     <div class="iso-output-card-box" id="calcOutputArea" style="display: none; margin-top: 20px;">
                         <h3 id="calcResultTitle" class="highlight-cyan" style="font-size: 1.2rem; margin-bottom: 5px;">Kết Quả Tính Toán</h3>

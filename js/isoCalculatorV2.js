@@ -313,6 +313,9 @@ const IsoCalcV2 = (function() {
                 } else if (['a','b','c','cd','d','e','ef','f','fg','g','h'].includes(l)) {
                     es = fundDev;
                     ei = es - itVal;
+                } else if (l === 'k' && (itGrade <= 3 || itGrade >= 8)) {
+                    ei = 0;
+                    es = ei + itVal;
                 } else {
                     ei = fundDev;
                     es = ei + itVal;

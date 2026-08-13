@@ -5,9 +5,7 @@
 
 const SIZE_RANGES = [
     [0, 3], [3, 6], [6, 10], [10, 18], [18, 30], [30, 50], [50, 80],
-    [80, 120], [120, 180], [180, 250], [250, 315], [315, 400], [400, 500],
-    [500, 630], [630, 800], [800, 1000], [1000, 1250], [1250, 1600],
-    [1600, 2000], [2000, 2500], [2500, 3150]
+    [80, 120], [120, 180], [180, 250], [250, 315], [315, 400], [400, 500]
 ];
 
 const IT_GRADES = {
@@ -29,101 +27,50 @@ function getSizeIndex(size) {
     return SIZE_RANGES.length - 1;
 }
 
-function getD(size) {
-    if (size <= 0) return Math.sqrt(1 * 3);
-    for (let i = 0; i < SIZE_RANGES.length; i++) {
-        if (size > SIZE_RANGES[i][0] && size <= SIZE_RANGES[i][1]) {
-            if (SIZE_RANGES[i][0] === 0) return Math.sqrt(1 * 3);
-            return Math.sqrt(SIZE_RANGES[i][0] * SIZE_RANGES[i][1]);
-        }
-    }
-    return Math.sqrt(SIZE_RANGES[SIZE_RANGES.length-1][0] * SIZE_RANGES[SIZE_RANGES.length-1][1]);
-}
-
 function getIT(itGrade, size) {
     const idx = getSizeIndex(size);
-    if (itGrade >= 5 && itGrade <= 12 && idx < 13 && IT_GRADES[itGrade]) {
-        return IT_GRADES[itGrade][idx] / 1000.0;
-    }
-    
-    let D = getD(size);
-    let I = (D <= 500) ? (0.45 * Math.pow(D, 1/3) + 0.001 * D) : (0.004 * D + 2.1);
-    let val = 0;
-    if (itGrade === 1) val = 0.8 + 0.020 * D;
-    else if (itGrade === 2) val = (0.8 + 0.020 * D) * 1.58; 
-    else if (itGrade === 3) val = (0.8 + 0.020 * D) * 2.5; 
-    else if (itGrade === 4) val = (0.8 + 0.020 * D) * 4; 
-    else if (itGrade === 5) val = 7 * I;
-    else if (itGrade === 6) val = 10 * I;
-    else if (itGrade === 7) val = 16 * I;
-    else if (itGrade === 8) val = 25 * I;
-    else if (itGrade === 9) val = 40 * I;
-    else if (itGrade === 10) val = 64 * I;
-    else if (itGrade === 11) val = 100 * I;
-    else if (itGrade === 12) val = 160 * I;
-    else if (itGrade === 13) val = 250 * I;
-    else if (itGrade === 14) val = 400 * I;
-    else if (itGrade === 15) val = 640 * I;
-    else if (itGrade === 16) val = 1000 * I;
-    else if (itGrade === 17) val = 1600 * I;
-    else if (itGrade === 18) val = 2500 * I;
-    else val = 16 * I;
-    
-    return Math.round(val) / 1000.0;
+    const table = IT_GRADES[itGrade] || IT_GRADES[7]; // Default to IT7 if missing
+    return table[idx] / 1000.0;
 }
 
 function getFundamentalDeviation(letter, size, itVal, itGrade) {
     const isUpper = letter[0] === letter[0].toUpperCase();
     const l = letter.toLowerCase();
     const idx = getSizeIndex(size);
-    
-    let devUm = null;
-    
-    if (idx < 13) {
-        switch(l) {
-            case 'a': devUm = [-270, -270, -280, -290, -300, -320, -360, -410, -580, -820, -1050, -1350, -1650][idx]; break;
-            case 'b': devUm = [-140, -140, -150, -150, -160, -180, -200, -240, -310, -420, -540, -680, -840][idx]; break;
-            case 'c': devUm = [-60, -70, -80, -95, -110, -130, -150, -180, -230, -280, -330, -400, -480][idx]; break;
-            case 'cd': devUm = [-32, -46, -56, -95, -110, -130, -150, -180, -230, -280, -330, -400, -480][idx]; break;
-            case 'd': devUm = [-20, -30, -40, -50, -65, -80, -100, -120, -145, -170, -190, -210, -230][idx]; break;
-            case 'e': devUm = [-14, -20, -25, -32, -40, -50, -60, -72, -85, -100, -110, -125, -135][idx]; break;
-            case 'ef': devUm = [-10, -14, -18, -32, -40, -50, -60, -72, -85, -100, -110, -125, -135][idx]; break;
-            case 'f': devUm = [-6, -10, -13, -16, -20, -25, -30, -36, -43, -50, -56, -62, -68][idx]; break;
-            case 'fg': devUm = [-4, -6, -8, -16, -20, -25, -30, -36, -43, -50, -56, -62, -68][idx]; break;
-            case 'g': devUm = [-2, -4, -5, -6, -7, -9, -10, -12, -14, -15, -17, -18, -20][idx]; break;
-            case 'h': devUm = 0; break;
-            case 'j': devUm = [-4, -4, -5, -6, -8, -10, -12, -15, -18, -21, -26, -28, -32][idx]; break;
-            case 'k': devUm = [0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5][idx]; break;
-            case 'm': devUm = [2, 4, 6, 7, 8, 9, 11, 13, 15, 17, 20, 21, 23][idx]; break;
-            case 'n': devUm = [4, 8, 10, 12, 15, 17, 20, 23, 27, 31, 34, 37, 40][idx]; break;
-            case 'p': devUm = [6, 12, 15, 18, 22, 26, 32, 37, 43, 50, 56, 62, 68][idx]; break;
-            case 'r': devUm = [10, 15, 19, 23, 28, 34, 43, 54, 68, 84, 98, 114, 132][idx]; break;
-            case 's': devUm = [14, 19, 23, 28, 35, 43, 59, 79, 108, 140, 170, 208, 252][idx]; break;
-            case 't': devUm = [18, 23, 28, 33, 41, 54, 75, 104, 146, 196, 240, 294, 360][idx]; break;
-            case 'u': devUm = [18, 23, 28, 33, 48, 70, 102, 144, 210, 284, 350, 435, 540][idx]; break;
-            case 'v': devUm = [20, 28, 34, 39, 55, 81, 120, 172, 252, 340, 425, 530, 660][idx]; break;
-            case 'x': devUm = [20, 28, 34, 45, 64, 97, 146, 210, 310, 425, 525, 660, 820][idx]; break;
-            case 'y': devUm = [null, null, null, null, 75, 114, 174, 254, 380, 520, 650, 820, 1000][idx]; break;
-            case 'z': devUm = [null, null, null, null, 88, 136, 210, 310, 465, 640, 790, 1000, 1250][idx]; break;
-            case 'za': devUm = [null, null, null, null, null, null, null, null, null, null, 1000, 1300, 1600][idx]; break;
-            case 'zb': devUm = [null, null, null, null, null, null, null, null, null, null, 1300, 1650, 2100][idx]; break;
-            case 'zc': devUm = [null, null, null, null, null, null, null, null, null, null, 1700, 2100, 2600][idx]; break;
-            case 'js': devUm = 0; break;
-            default: devUm = 0;
-        }
-    } else {
-        let D = getD(size);
-        if (l === 'd') devUm = -16 * Math.pow(D, 0.44);
-        else if (l === 'e') devUm = -11 * Math.pow(D, 0.41);
-        else if (l === 'f') devUm = -5.5 * Math.pow(D, 0.41);
-        else if (l === 'g') devUm = -2.5 * Math.pow(D, 0.34);
-        else if (l === 'h' || l === 'js') devUm = 0;
-        else devUm = null; 
-        if (devUm !== null) devUm = Math.round(devUm);
+
+    let devUm = 0;
+    switch(l) {
+        case 'a': devUm = [-270, -270, -280, -290, -300, -320, -360, -410, -580, -820, -1050, -1350, -1650][idx]; break;
+        case 'b': devUm = [-140, -140, -150, -150, -160, -180, -200, -240, -310, -420, -540, -680, -840][idx]; break;
+        case 'c': devUm = [-60, -70, -80, -95, -110, -130, -150, -180, -230, -280, -330, -400, -480][idx]; break;
+        case 'cd': devUm = [-32, -46, -56, -95, -110, -130, -150, -180, -230, -280, -330, -400, -480][idx]; break;
+        case 'd': devUm = [-20, -30, -40, -50, -65, -80, -100, -120, -145, -170, -190, -210, -230][idx]; break;
+        case 'e': devUm = [-14, -20, -25, -32, -40, -50, -60, -72, -85, -100, -110, -125, -135][idx]; break;
+        case 'ef': devUm = [-10, -14, -18, -32, -40, -50, -60, -72, -85, -100, -110, -125, -135][idx]; break;
+        case 'f': devUm = [-6, -10, -13, -16, -20, -25, -30, -36, -43, -50, -56, -62, -68][idx]; break;
+        case 'fg': devUm = [-4, -6, -8, -16, -20, -25, -30, -36, -43, -50, -56, -62, -68][idx]; break;
+        case 'g': devUm = [-2, -4, -5, -6, -7, -9, -10, -12, -14, -15, -17, -18, -20][idx]; break;
+        case 'h': devUm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0][idx]; break;
+        case 'j': devUm = [-4, -4, -5, -6, -8, -10, -12, -15, -18, -21, -26, -28, -32][idx]; break;
+        case 'k': devUm = [0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5][idx]; break;
+        case 'm': devUm = [2, 4, 6, 7, 8, 9, 11, 13, 15, 17, 20, 21, 23][idx]; break;
+        case 'n': devUm = [4, 8, 10, 12, 15, 17, 20, 23, 27, 31, 34, 37, 40][idx]; break;
+        case 'p': devUm = [6, 12, 15, 18, 22, 26, 32, 37, 43, 50, 56, 62, 68][idx]; break;
+        case 'r': devUm = [10, 15, 19, 23, 28, 34, 43, 54, 68, 84, 98, 114, 132][idx]; break;
+        case 's': devUm = [14, 19, 23, 28, 35, 43, 59, 79, 108, 140, 170, 208, 252][idx]; break;
+        case 't': devUm = [18, 23, 28, 33, 41, 54, 75, 104, 146, 196, 240, 294, 360][idx]; break;
+        case 'u': devUm = [18, 23, 28, 33, 48, 70, 102, 144, 210, 284, 350, 435, 540][idx]; break;
+        case 'v': devUm = [20, 28, 34, 39, 55, 81, 120, 172, 252, 340, 425, 530, 660][idx]; break;
+        case 'x': devUm = [20, 28, 34, 45, 64, 97, 146, 210, 310, 425, 525, 660, 820][idx]; break;
+        case 'y': devUm = [0, 0, 0, 0, 75, 114, 174, 254, 380, 520, 650, 820, 1000][idx]; break;
+        case 'z': devUm = [0, 0, 0, 0, 88, 136, 210, 310, 465, 640, 790, 1000, 1250][idx]; break;
+        case 'za': devUm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1000, 1300, 1600][idx]; break;
+        case 'zb': devUm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1300, 1650, 2100][idx]; break;
+        case 'zc': devUm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1700, 2100, 2600][idx]; break;
+        default: devUm = 0;
     }
     
-    if (devUm === null) return null; // Undefined combination
-
+    if (!devUm) devUm = 0;
     const devMm = devUm / 1000.0;
 
     if (isUpper) {
@@ -135,11 +82,11 @@ function getFundamentalDeviation(letter, size, itVal, itGrade) {
             return { ES: itVal / 2.0, EI: -itVal / 2.0 };
         } else if (L === 'J') {
             const J_ES = {
-                6: [2, 5, 5, 6, 8, 10, 13, 16, 18, 22, 25, 29, 33],
-                7: [4, 6, 8, 10, 12, 14, 18, 22, 26, 30, 36, 39, 43],
-                8: [6, 10, 12, 15, 20, 24, 28, 34, 41, 47, 55, 60, 66]
+                6: [2, 5, 5, 6, 8, 10, 13, 16, 18, 22, 25, 29],
+                7: [4, 6, 8, 10, 12, 14, 18, 22, 26, 30, 36, 39],
+                8: [6, 10, 12, 15, 20, 24, 28, 34, 41, 47, 55, 60]
             };
-            if (J_ES[itGrade] && idx < 13) {
+            if (J_ES[itGrade] && idx < 12) {
                 const ES = J_ES[itGrade][idx] / 1000.0;
                 return { ES: ES, EI: ES - itVal };
             }
@@ -169,7 +116,7 @@ function getFundamentalDeviation(letter, size, itVal, itGrade) {
                 if (['K','M','N'].includes(L) && itGrade <= 8) applies = true;
                 if (['P','R','S','T','U','V','X','Y','Z','ZA','ZB','ZC'].includes(L) && itGrade <= 7) applies = true;
                 
-                if (applies && idx < 13) {
+                if (applies) {
                     deltaMm = DELTA_VALUES[idx][itGrade - 3] / 1000.0;
                 }
             }
@@ -186,12 +133,12 @@ function getFundamentalDeviation(letter, size, itVal, itGrade) {
             return { es: itVal / 2.0, ei: -itVal / 2.0 };
         } else if (l === 'j') {
             const j_es = {
-                5: [2, 3, 3, 4, 5, 5, 6, 7, 9, 10, 13, 14, 16],
-                6: [2, 5, 5, 6, 8, 10, 13, 16, 18, 22, 25, 29, 33],
-                7: [4, 6, 8, 10, 12, 14, 18, 22, 26, 30, 36, 39, 43],
-                8: [6, 10, 12, 15, 20, 24, 28, 34, 41, 47, 55, 60, 66]
+                5: [2, 3, 3, 4, 5, 5, 6, 7, 9, 10, 13, 14],
+                6: [2, 5, 5, 6, 8, 10, 13, 16, 18, 22, 25, 29],
+                7: [4, 6, 8, 10, 12, 14, 18, 22, 26, 30, 36, 39],
+                8: [6, 10, 12, 15, 20, 24, 28, 34, 41, 47, 55, 60]
             };
-            if (j_es[itGrade] && idx < 13) {
+            if (j_es[itGrade] && idx < 12) {
                 const es = j_es[itGrade][idx] / 1000.0;
                 return { es: es, ei: es - itVal };
             }
@@ -206,21 +153,12 @@ function getFundamentalDeviation(letter, size, itVal, itGrade) {
         }
     }
 }
-
 function computeFit(nominal, holeLetter, holeIT, shaftLetter, shaftIT) {
     const hIT = getIT(parseInt(holeIT), nominal);
     const sIT = getIT(parseInt(shaftIT), nominal);
 
     const holeDev = getFundamentalDeviation(holeLetter, nominal, hIT, parseInt(holeIT));
     const shaftDev = getFundamentalDeviation(shaftLetter, nominal, sIT, parseInt(shaftIT));
-
-    if (holeDev === null || shaftDev === null) {
-        return {
-           holeMax: null, holeMin: null, shaftMax: null, shaftMin: null,
-           maxClearance: null, minClearance: null, fitType: "KHÔNG ÁP DỤNG", fitClass: "gray"
-        };
-    }
-
 
     const holeMax = nominal + holeDev.ES;
     const holeMin = nominal + holeDev.EI;
@@ -285,34 +223,37 @@ function generateClearanceHtml(fit) {
 const PREFERRED_SHAFTS = ["h6","g6","f7","e8","d9","js6","k6","m6","n6","p6","r6","s6"];
 const COMMON_SHAFTS = ["h5","h7","h8","f6","g5","e7","d8","k5","m5","n5","p5"];
 
-const LETTERS = ['a','b','c','cd','d','e','ef','f','fg','g','h','j','js','k','m','n','p','r','s','t','u','v','x','y','z','za','zb','zc'];
-const colMap = {};
-LETTERS.forEach((l, i) => colMap[l] = i + 1);
+// Extended to complete the cross shape (1 to 13)
+const SHAFT_CLASSES = [
+    "h1","js1","h2","js2","h3","js3","g4","h4","js4","k4","m4","n4","p4","r4","s4",
+    "f5","g5","h5","j5","js5","k5","m5","n5","p5","r5","s5","t5","u5","v5","x5","y5","z5",
+    "e6","f6","g6","h6","j6","js6","k6","m6","n6","p6","r6","s6","t6","u6","v6","x6","y6","z6",
+    "d7","e7","f7","g7","h7","j7","js7","k7","m7","n7","p7","r7","s7","t7","u7","v7","x7","y7","z7",
+    "c8","d8","e8","f8","g8","h8","js8","k8","m8","n8","p8","r8","s8","t8","u8","v8","x8","y8","z8",
+    "a9","b9","c9","d9","e9","f9","h9","js9",
+    "a10","b10","c10","d10","e10","h10","js10",
+    "a11","b11","c11","d11","h11","js11",
+    "a12","b12","c12","h12","js12",
+    "a13","b13","c13","h13","js13"
+];
 
-const PREFERRED_HOLES = ["H6","H7","H8","H9","H11","Js7","K7","M7","N7","P7"];
+const PREFERRED_HOLES = ["H6","H7","H8","H9","H11","JS7","K7","M7","N7","P7"];
 const COMMON_HOLES = ["H5","H10","F7","G6","E8","D9","K6","M6","N6","P6"];
 
-const VALID_RANGES = {
-    'a': [9, 13], 'b': [9, 13], 'c': [8, 13], 'cd': [6, 10], 'd': [7, 11],
-    'e': [6, 10], 'ef': [5, 9], 'f': [5, 9], 'fg': [4, 8], 'g': [4, 8],
-    'h': [1, 18], 'j': [5, 8], 'js': [1, 18], 'k': [4, 8], 'm': [4, 8],
-    'n': [4, 8], 'p': [4, 8], 'r': [4, 8], 's': [4, 8], 't': [5, 8],
-    'u': [5, 8], 'v': [5, 8], 'x': [5, 8], 'y': [5, 8], 'z': [5, 8],
-    'za': [5, 8], 'zb': [5, 8], 'zc': [5, 8]
-};
+const HOLE_CLASSES = [
+    "H1","Js1","H2","Js2","H3","Js3","H4","Js4","K4","M4","G5","H5","Js5","K5","M5","N5","P5","R5","S5",
+    "F6","G6","H6","J6","Js6","K6","M6","N6","P6","R6","S6","T6","U6","V6","X6","Y6","Z6",
+    "D7","E7","F7","G7","H7","J7","Js7","K7","M7","N7","P7","R7","S7","T7","U7","V7","X7","Y7","Z7",
+    "C8","D8","E8","F8","G8","H8","J8","Js8","K8","M8","N8","P8","R8","S8","T8","U8","V8","X8","Y8","Z8",
+    "A9","B9","C9","D9","E9","F9","H9","Js9",
+    "A10","B10","C10","D10","E10","H10","Js10",
+    "A11","B11","C11","D11","H11","Js11",
+    "A12","B12","C12","H12","Js12",
+    "A13","B13","C13","H13","Js13"
+];
 
-const SHAFT_CLASSES = [];
-const HOLE_CLASSES = [];
-
-for (let it = 1; it <= 18; it++) {
-    for (let l of LETTERS) {
-        if (VALID_RANGES[l] && it >= VALID_RANGES[l][0] && it <= VALID_RANGES[l][1]) {
-            SHAFT_CLASSES.push(l + it);
-            let holeLetter = l === 'js' ? 'Js' : l.toUpperCase();
-            HOLE_CLASSES.push(holeLetter + it);
-        }
-    }
-}
+// Map letter to column index (1 to 22) for the cross shape
+const colMap = { 'a':1, 'b':2, 'c':3, 'd':4, 'e':5, 'f':6, 'g':7, 'h':8, 'j':9, 'js':10, 'k':11, 'm':12, 'n':13, 'p':14, 'r':15, 's':16, 't':17, 'u':18, 'v':19, 'x':20, 'y':21, 'z':22 };
 
 let selectedShaftClass = "h6";
 let selectedHoleClass = "H6";
@@ -335,8 +276,8 @@ function initShaftPanel() {
     const box = document.getElementById('shaftGridBox');
     box.innerHTML = '';
     
-    // Explicitly set grid to 28 columns
-    box.style.gridTemplateColumns = "repeat(28, minmax(40px, 1fr))";
+    // Explicitly set grid to 22 columns
+    box.style.gridTemplateColumns = "repeat(22, minmax(40px, 1fr))";
 
     SHAFT_CLASSES.forEach(cls => {
         const m = cls.match(/^([a-z]+)(\d+)$/i);
@@ -375,16 +316,60 @@ function updateShaftPanel() {
 
     const itVal = getIT(parseInt(m[2]), nominal);
     const dev = getFundamentalDeviation(m[1], nominal, itVal, parseInt(m[2]));
+
+    document.getElementById('shaftSelectedTitle').innerText = selectedShaftClass;
+    document.getElementById('shaftEsTxt').innerText = fmt(dev.es, 3, true);
+    document.getElementById('shaftEiTxt').innerText = fmt(dev.ei, 3, true);
+    document.getElementById('shaftItTxt').innerText = fmt(itVal, 3);
+    document.getElementById('shaftMaxTxt').innerText = fmt(nominal + dev.es, 3);
+    document.getElementById('shaftMinTxt').innerText = fmt(nominal + dev.ei, 3);
+}
+
+function initHolePanel() {
+    const box = document.getElementById('holeGridBox');
+    box.innerHTML = '';
+    
+    box.style.gridTemplateColumns = "repeat(22, minmax(40px, 1fr))";
+
+    HOLE_CLASSES.forEach(cls => {
+        const m = cls.match(/^([a-z]+)(\d+)$/i);
+        if (!m) return;
+        
+        const letter = m[1].toLowerCase();
+        const num = parseInt(m[2]);
+
+        const btn = document.createElement('div');
+        let type = 'std';
+        if (PREFERRED_HOLES.includes(cls)) type = 'pref';
+        else if (COMMON_HOLES.includes(cls)) type = 'comm';
+
+        btn.className = `iso-class-btn ${type} ${cls === selectedHoleClass ? 'active' : ''}`;
+        btn.innerText = cls;
+        
+        btn.style.gridColumn = colMap[letter] || 1;
+        btn.style.gridRow = num;
+
+        btn.onclick = () => {
+            selectedHoleClass = cls;
+            box.querySelectorAll('.iso-class-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            updateHolePanel();
+        };
+        box.appendChild(btn);
+    });
+    updateHolePanel();
+}
+
+function updateHolePanel() {
+    const nominal = parseFloat(document.getElementById('holeNominalInput').value) || 100;
+    const m = selectedHoleClass.match(/^([a-z]+)(\d+)$/i);
+    if (!m) return;
+
+    const itVal = getIT(parseInt(m[2]), nominal);
+    const dev = getFundamentalDeviation(m[1], nominal, itVal, parseInt(m[2]));
+
     document.getElementById('holeSelectedTitle').innerText = selectedHoleClass;
-    if (dev === null) {
-        document.getElementById('holeEsTxt').innerText = "N/A";
-        document.getElementById('holeEiTxt').innerText = "N/A";
-        document.getElementById('holeItTxt').innerText = "N/A";
-        document.getElementById('holeMaxTxt').innerText = "N/A";
-        document.getElementById('holeMinTxt').innerText = "N/A";
-        return;
-    }
-document.getElementById('holeEsTxt').innerText = fmt(dev.ES, 3, true);
+    document.getElementById('holeEsTxt').innerText = fmt(dev.ES, 3, true);
     document.getElementById('holeEiTxt').innerText = fmt(dev.EI, 3, true);
     document.getElementById('holeItTxt').innerText = fmt(itVal, 3);
     document.getElementById('holeMaxTxt').innerText = fmt(nominal + dev.ES, 3);

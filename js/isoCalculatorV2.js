@@ -291,6 +291,7 @@ const IsoCalcV2 = (function() {
             let l = letter.toLowerCase();
             let itVal = getIT(itGrade, size); // in um
             let fundDev = getShaftFundamentalDeviation(l, size, itGrade);
+            let idx = getSizeIndex(size);
             
             if (fundDev === null && l !== 'js') return null; // Invalid combination
 
@@ -300,6 +301,19 @@ const IsoCalcV2 = (function() {
                 if (l === 'js') {
                     ES = itVal / 2.0;
                     EI = -itVal / 2.0;
+                } else if (l === 'j') {
+                    const J_ES = {
+                        6: [2, 5, 5, 6, 8, 10, 13, 16, 18, 22, 25, 29, 29],
+                        7: [4, 6, 8, 10, 12, 14, 18, 22, 26, 30, 36, 39, 39],
+                        8: [6, 10, 12, 15, 20, 24, 28, 34, 41, 47, 55, 60, 60]
+                    };
+                    if (J_ES[itGrade] && idx < 13 && J_ES[itGrade][idx] !== undefined) {
+                        ES = J_ES[itGrade][idx];
+                        EI = ES - itVal;
+                    } else {
+                        ES = itVal / 2.0;
+                        EI = -itVal / 2.0;
+                    }
                 } else if (l === 'h') {
                     EI = 0;
                     ES = itVal;
@@ -321,6 +335,20 @@ const IsoCalcV2 = (function() {
                 if (l === 'js') {
                     es = itVal / 2.0;
                     ei = -itVal / 2.0;
+                } else if (l === 'j') {
+                    const j_es = {
+                        5: [2, 3, 3, 4, 5, 5, 6, 7, 9, 10, 13, 14, 14],
+                        6: [2, 5, 5, 6, 8, 10, 13, 16, 18, 22, 25, 29, 29],
+                        7: [4, 6, 8, 10, 12, 14, 18, 22, 26, 30, 36, 39, 39],
+                        8: [6, 10, 12, 15, 20, 24, 28, 34, 41, 47, 55, 60, 60]
+                    };
+                    if (j_es[itGrade] && idx < 13 && j_es[itGrade][idx] !== undefined) {
+                        es = j_es[itGrade][idx];
+                        ei = es - itVal;
+                    } else {
+                        es = itVal / 2.0;
+                        ei = -itVal / 2.0;
+                    }
                 } else if (['a','b','c','cd','d','e','ef','f','fg','g','h'].includes(l)) {
                     es = fundDev;
                     ei = es - itVal;

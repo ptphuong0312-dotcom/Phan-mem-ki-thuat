@@ -223,37 +223,34 @@ function generateClearanceHtml(fit) {
 const PREFERRED_SHAFTS = ["h6","g6","f7","e8","d9","js6","k6","m6","n6","p6","r6","s6"];
 const COMMON_SHAFTS = ["h5","h7","h8","f6","g5","e7","d8","k5","m5","n5","p5"];
 
-// Extended to complete the cross shape (1 to 13)
-const SHAFT_CLASSES = [
-    "h1","js1","h2","js2","h3","js3","g4","h4","js4","k4","m4","n4","p4","r4","s4",
-    "f5","g5","h5","j5","js5","k5","m5","n5","p5","r5","s5","t5","u5","v5","x5","y5","z5",
-    "e6","f6","g6","h6","j6","js6","k6","m6","n6","p6","r6","s6","t6","u6","v6","x6","y6","z6",
-    "d7","e7","f7","g7","h7","j7","js7","k7","m7","n7","p7","r7","s7","t7","u7","v7","x7","y7","z7",
-    "c8","d8","e8","f8","g8","h8","js8","k8","m8","n8","p8","r8","s8","t8","u8","v8","x8","y8","z8",
-    "a9","b9","c9","d9","e9","f9","h9","js9",
-    "a10","b10","c10","d10","e10","h10","js10",
-    "a11","b11","c11","d11","h11","js11",
-    "a12","b12","c12","h12","js12",
-    "a13","b13","c13","h13","js13"
-];
+const LETTERS = ['a','b','c','cd','d','e','ef','f','fg','g','h','j','js','k','m','n','p','r','s','t','u','v','x','y','z','za','zb','zc'];
+const colMap = {};
+LETTERS.forEach((l, i) => colMap[l] = i + 1);
 
-const PREFERRED_HOLES = ["H6","H7","H8","H9","H11","JS7","K7","M7","N7","P7"];
+const PREFERRED_HOLES = ["H6","H7","H8","H9","H11","Js7","K7","M7","N7","P7"];
 const COMMON_HOLES = ["H5","H10","F7","G6","E8","D9","K6","M6","N6","P6"];
 
-const HOLE_CLASSES = [
-    "H1","Js1","H2","Js2","H3","Js3","H4","Js4","K4","M4","G5","H5","Js5","K5","M5","N5","P5","R5","S5",
-    "F6","G6","H6","J6","Js6","K6","M6","N6","P6","R6","S6","T6","U6","V6","X6","Y6","Z6",
-    "D7","E7","F7","G7","H7","J7","Js7","K7","M7","N7","P7","R7","S7","T7","U7","V7","X7","Y7","Z7",
-    "C8","D8","E8","F8","G8","H8","J8","Js8","K8","M8","N8","P8","R8","S8","T8","U8","V8","X8","Y8","Z8",
-    "A9","B9","C9","D9","E9","F9","H9","Js9",
-    "A10","B10","C10","D10","E10","H10","Js10",
-    "A11","B11","C11","D11","H11","Js11",
-    "A12","B12","C12","H12","Js12",
-    "A13","B13","C13","H13","Js13"
-];
+const VALID_RANGES = {
+    'a': [9, 13], 'b': [9, 13], 'c': [8, 13], 'cd': [6, 10], 'd': [7, 11],
+    'e': [6, 10], 'ef': [5, 9], 'f': [5, 9], 'fg': [4, 8], 'g': [4, 8],
+    'h': [1, 18], 'j': [5, 8], 'js': [1, 18], 'k': [4, 8], 'm': [4, 8],
+    'n': [4, 8], 'p': [4, 8], 'r': [4, 8], 's': [4, 8], 't': [5, 8],
+    'u': [5, 8], 'v': [5, 8], 'x': [5, 8], 'y': [5, 8], 'z': [5, 8],
+    'za': [5, 8], 'zb': [5, 8], 'zc': [5, 8]
+};
 
-// Map letter to column index (1 to 22) for the cross shape
-const colMap = { 'a':1, 'b':2, 'c':3, 'd':4, 'e':5, 'f':6, 'g':7, 'h':8, 'j':9, 'js':10, 'k':11, 'm':12, 'n':13, 'p':14, 'r':15, 's':16, 't':17, 'u':18, 'v':19, 'x':20, 'y':21, 'z':22 };
+const SHAFT_CLASSES = [];
+const HOLE_CLASSES = [];
+
+for (let it = 1; it <= 18; it++) {
+    for (let l of LETTERS) {
+        if (VALID_RANGES[l] && it >= VALID_RANGES[l][0] && it <= VALID_RANGES[l][1]) {
+            SHAFT_CLASSES.push(l + it);
+            let holeLetter = l === 'js' ? 'Js' : l.toUpperCase();
+            HOLE_CLASSES.push(holeLetter + it);
+        }
+    }
+}
 
 let selectedShaftClass = "h6";
 let selectedHoleClass = "H6";
@@ -276,8 +273,8 @@ function initShaftPanel() {
     const box = document.getElementById('shaftGridBox');
     box.innerHTML = '';
     
-    // Explicitly set grid to 22 columns
-    box.style.gridTemplateColumns = "repeat(22, minmax(40px, 1fr))";
+    // Explicitly set grid to 28 columns
+    box.style.gridTemplateColumns = "repeat(28, minmax(40px, 1fr))";
 
     SHAFT_CLASSES.forEach(cls => {
         const m = cls.match(/^([a-z]+)(\d+)$/i);
@@ -329,7 +326,7 @@ function initHolePanel() {
     const box = document.getElementById('holeGridBox');
     box.innerHTML = '';
     
-    box.style.gridTemplateColumns = "repeat(22, minmax(40px, 1fr))";
+    box.style.gridTemplateColumns = "repeat(28, minmax(40px, 1fr))";
 
     HOLE_CLASSES.forEach(cls => {
         const m = cls.match(/^([a-z]+)(\d+)$/i);

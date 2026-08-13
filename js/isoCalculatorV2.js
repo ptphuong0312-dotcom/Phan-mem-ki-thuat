@@ -314,13 +314,8 @@ const IsoCalcV2 = (function() {
                     es = fundDev;
                     ei = es - itVal;
                 } else {
-                    if (l === 'k' && itGrade >= 4 && itGrade <= 7) {
-                        es = itVal;
-                        ei = 0;
-                    } else {
-                        ei = fundDev;
-                        es = ei + itVal;
-                    }
+                    ei = fundDev;
+                    es = ei + itVal;
                 }
                 return { letter, it: itGrade, es, ei, itVal, max: size + es/1000, min: size + ei/1000 };
             }

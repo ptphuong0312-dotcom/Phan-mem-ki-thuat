@@ -86,60 +86,21 @@ const IsoCalcV2 = (function() {
         return Math.round(val);
     }
 
-    // Step 4: Fundamental Deviations (Master Data for exceptions up to 500)
-    // Values that don't fit the pure formula mathematically perfectly (rounded specially in ISO)
-    const DEV_TABLE_UP_TO_500 = {
-        'a': [-270, -270, -280, -290, -300, -320, -360, -410, -580, -820, -1050, -1350, -1650],
-        'b': [-140, -140, -150, -150, -160, -180, -200, -240, -310, -420, -540, -680, -840],
-        'c': [-60, -70, -80, -95, -110, -130, -150, -180, -230, -280, -330, -400, -480],
-        'cd': [-32, -46, -56, -95, -110, -130, -150, -180, -230, -280, -330, -400, -480],
-        'd': [-20, -30, -40, -50, -65, -80, -100, -120, -145, -170, -190, -210, -230],
-        'e': [-14, -20, -25, -32, -40, -50, -60, -72, -85, -100, -110, -125, -135],
-        'ef': [-10, -14, -18, -32, -40, -50, -60, -72, -85, -100, -110, -125, -135],
-        'f': [-6, -10, -13, -16, -20, -25, -30, -36, -43, -50, -56, -62, -68],
-        'fg': [-4, -6, -8, -16, -20, -25, -30, -36, -43, -50, -56, -62, -68],
-        'g': [-2, -4, -5, -6, -7, -9, -10, -12, -14, -15, -17, -18, -20],
-        'h': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        'j': [-4, -4, -5, -6, -8, -10, -12, -15, -18, -21, -26, -28, -32],
-        'k': [0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5],
-        'm': [2, 4, 6, 7, 8, 9, 11, 13, 15, 17, 20, 21, 23],
-        'n': [4, 8, 10, 12, 15, 17, 20, 23, 27, 31, 34, 37, 40],
-        'p': [6, 12, 15, 18, 22, 26, 32, 37, 43, 50, 56, 62, 68],
-        'r': [10, 15, 19, 23, 28, 34, 43, 54, 68, 84, 98, 114, 132],
-        's': [14, 19, 23, 28, 35, 43, 59, 79, 108, 140, 170, 208, 252],
-        't': [18, 23, 28, 33, 41, 54, 75, 104, 146, 196, 240, 294, 360],
-        'u': [18, 23, 28, 33, 48, 70, 102, 144, 210, 284, 350, 435, 540],
-        'v': [20, 28, 34, 39, 55, 81, 120, 172, 252, 340, 425, 530, 660],
-        'x': [20, 28, 34, 45, 64, 97, 146, 210, 310, 425, 525, 660, 820],
-        'y': [null, null, null, null, 75, 114, 174, 254, 380, 520, 650, 820, 1000],
-        'z': [null, null, null, null, 88, 136, 210, 310, 465, 640, 790, 1000, 1250],
-        'za': [null, null, null, null, null, null, null, null, null, null, 1000, 1300, 1600],
-        'zb': [null, null, null, null, null, null, null, null, null, null, 1300, 1650, 2100],
-        'zc': [null, null, null, null, null, null, null, null, null, null, 1700, 2100, 2600]
-    };
-
+    // Step 4: Fundamental Deviations
     function getShaftFundamentalDeviation(letter, size, itGrade) {
         let l = letter.toLowerCase();
-        let idx = getSizeIndex(size);
         
-        if (l === 'js') return 0; // handled special
+        if (typeof isoClean === 'undefined' || !isoClean.Shaft) return null;
         
-        if (idx < 13 && DEV_TABLE_UP_TO_500[l] !== undefined) {
-            let val = DEV_TABLE_UP_TO_500[l][idx];
-            if (val === null) return null;
-            return val;
+        let ranges = isoClean.Shaft[l];
+        if (!ranges) return null;
+        
+        for (let r of ranges) {
+            if (size > r.min && size <= r.max) {
+                return r.val !== undefined ? r.val : 0;
+            }
         }
         
-        // For > 500mm
-        let D = getD(size);
-        let devUm = null;
-        if (l === 'd') devUm = -16 * Math.pow(D, 0.44);
-        else if (l === 'e') devUm = -11 * Math.pow(D, 0.41);
-        else if (l === 'f') devUm = -5.5 * Math.pow(D, 0.41);
-        else if (l === 'g') devUm = -2.5 * Math.pow(D, 0.34);
-        else if (l === 'h') devUm = 0;
-        
-        if (devUm !== null) return Math.round(devUm);
         return null;
     }
 

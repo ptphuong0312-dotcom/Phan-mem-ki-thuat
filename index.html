@@ -224,6 +224,7 @@
                     <button class="iso-tab-nav-btn" onclick="switchIsoTab('holeDevPanel')">Dung Sai Lỗ</button>
                     <button class="iso-tab-nav-btn" onclick="switchIsoTab('holeSysPanel')">Hệ Thống Lỗ Cơ Bản</button>
                     <button class="iso-tab-nav-btn" onclick="switchIsoTab('shaftSysPanel')">Hệ Thống Trục Cơ Bản</button>
+                    <button class="iso-tab-nav-btn" onclick="switchIsoTab('calcPanel')">Tính Toán Dung Sai</button>
                 </div>
 
                 <!-- PANEL 1 -->
@@ -389,6 +390,34 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- PANEL 5: TÍNH TOÁN DUNG SAI ĐỘC LẬP -->
+                <div id="calcPanel" class="iso-panel-body">
+                    <div class="iso-controls-bar" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <label for="calcInputStr">Nhập Lỗ/Trục (vd: 30H7/g6, 50 h6):</label>
+                        <input type="text" id="calcInputStr" value="30H7/g6" placeholder="Ví dụ: 30H7/g6" style="width: 250px; padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; font-size: 16px;" onkeydown="if(event.key === 'Enter') window.runIsoCalcV2()">
+                        <button onclick="window.runIsoCalcV2()" style="padding: 8px 16px; background: #0ea5e9; color: white; border-radius: 6px; font-weight: 600; cursor: pointer;">Tính Toán V2</button>
+                    </div>
+
+                    <div id="calcErrorMsg" style="color: #ef4444; margin: 15px 0; font-weight: bold; display: none;">Lỗi: Cú pháp không hợp lệ. Vui lòng nhập đúng định dạng (vd: 30H7/g6 hoặc 50h6).</div>
+
+                    <div class="iso-output-card-box" id="calcOutputArea" style="display: none; margin-top: 20px;">
+                        <h3 id="calcResultTitle" class="highlight-cyan" style="font-size: 1.2rem; margin-bottom: 5px;">Kết Quả Tính Toán</h3>
+                        <p id="calcFitType" style="color: #38bdf8; margin-bottom: 15px; font-weight: bold; font-size: 1.1rem;"></p>
+                        
+                        <div class="iso-result-grid-layout" id="calcGridRes" style="margin-bottom: 20px;">
+                            <!-- Cards injected by JS -->
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h4 style="color:#94a3b8; font-size: 14px; margin-bottom:10px;">Biểu đồ miền dung sai:</h4>
+                            <div style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 15px; display: flex; justify-content: center;">
+                                <canvas id="calcDiagramCanvas" width="600" height="250" style="width: 100%; height: auto; max-width: 600px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         </div>
@@ -803,6 +832,7 @@
     <script src="js/app.js"></script>
     <script src="js/reverseLookup.js"></script>
     <script src="js/toleranceCalculator.js"></script>
+    <script src="js/isoCalculatorV2.js"></script>
     <script src="js/drawProfile.js"></script>
     <script src="js/cameraUtils.js"></script>
     <script src="js/fitApplications.js"></script>

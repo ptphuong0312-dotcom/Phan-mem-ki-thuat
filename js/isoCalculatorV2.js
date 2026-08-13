@@ -479,3 +479,10 @@ window.runIsoCalcV2 = function() {
 
     IsoCalcV2.drawDiagram('calcDiagramCanvas', resultForDiagram);
 };
+
+// Initial render
+setTimeout(() => {
+    if (document.getElementById('calcInputStr') || document.getElementById('calcNominal')) {
+        window.runIsoCalcV2();
+    }
+}, 500);

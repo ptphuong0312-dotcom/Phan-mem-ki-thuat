@@ -156,8 +156,12 @@
         const type = el.getAttribute('data-type');
 
         // 1. Switch Main Tab
-        const navBtn = document.querySelector(`.main-nav-item[data-target="${targetTab}"]`);
-        if (navBtn) navBtn.click();
+        if (window.switchMainModule) {
+            window.switchMainModule(targetTab);
+        } else {
+            const navBtn = document.querySelector(`.main-nav-item[data-target="${targetTab}"]`);
+            if (navBtn) navBtn.click();
+        }
 
         // 2. Perform contextual action
         if (type === 'ren') {
@@ -406,6 +410,92 @@
         if (elTech) elTech.innerText = closest.tech;
     };
 
+    // -------------------------------------------------------------
+    // 5. SCALABLE MODULE HUB & NAVIGATION CONTROLLER
+    // -------------------------------------------------------------
+    window.switchMainModule = function(moduleId) {
+        if (!moduleId) return;
+
+        // 1. Switch Active Section
+        const targetSec = document.getElementById(moduleId);
+        if (!targetSec) return;
+
+        document.querySelectorAll('.main-section').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        targetSec.classList.add('active');
+
+        // 2. Update Module Pills Bar
+        document.querySelectorAll('.module-pill-btn').forEach(btn => {
+            const isMatch = btn.getAttribute('data-target') === moduleId;
+            btn.classList.toggle('active', isMatch);
+            if (isMatch) {
+                btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        });
+
+        // 3. Update Bottom Nav
+        document.querySelectorAll('.main-nav-item').forEach(item => {
+            item.classList.toggle('active', item.getAttribute('data-target') === moduleId);
+        });
+
+        // 4. Update Module Hub Cards
+        document.querySelectorAll('.module-hub-card').forEach(card => {
+            card.classList.toggle('active', card.getAttribute('data-target') === moduleId);
+        });
+
+        // 5. Save state
+        try {
+            localStorage.setItem('active_module_id', moduleId);
+        } catch (e) {}
+
+        // 6. Close Hub if open
+        window.closeModuleHub();
+
+        // 7. Scroll smoothly to top of module
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.openModuleHub = function() {
+        const overlay = document.getElementById('moduleHubOverlay');
+        if (overlay) {
+            overlay.classList.add('active');
+            const searchInput = document.getElementById('moduleHubSearch');
+            if (searchInput) {
+                searchInput.value = '';
+                window.filterModuleHub('');
+                setTimeout(() => searchInput.focus(), 150);
+            }
+        }
+    };
+
+    window.closeModuleHub = function() {
+        const overlay = document.getElementById('moduleHubOverlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+        }
+    };
+
+    window.filterModuleHub = function(query) {
+        const q = (query || '').trim().toLowerCase();
+        const cards = document.querySelectorAll('.module-hub-card');
+        const groups = document.querySelectorAll('.module-hub-group');
+
+        cards.forEach(card => {
+            const title = (card.querySelector('.module-card-title')?.innerText || '').toLowerCase();
+            const desc = (card.querySelector('.module-card-desc')?.innerText || '').toLowerCase();
+            const badge = (card.querySelector('.module-card-badge')?.innerText || '').toLowerCase();
+            const match = !q || title.includes(q) || desc.includes(q) || badge.includes(q);
+            card.style.display = match ? 'flex' : 'none';
+        });
+
+        // Hide empty groups
+        groups.forEach(grp => {
+            const visibleCards = grp.querySelectorAll('.module-hub-card[style*="display: flex"], .module-hub-card:not([style*="display: none"])');
+            grp.style.display = visibleCards.length > 0 ? 'block' : 'none';
+        });
+    };
+
     function escapeHtml(str) {
         return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
@@ -413,6 +503,23 @@
     // Initialize on DOM load
     document.addEventListener('DOMContentLoaded', () => {
         initSmartSearch();
+
+        // Restore active module if saved
+        const savedModule = localStorage.getItem('active_module_id');
+        if (savedModule && document.getElementById(savedModule)) {
+            window.switchMainModule(savedModule);
+        }
+
+        // Close Hub on Esc or click overlay background
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') window.closeModuleHub();
+        });
+        const hubOverlay = document.getElementById('moduleHubOverlay');
+        if (hubOverlay) {
+            hubOverlay.addEventListener('click', (e) => {
+                if (e.target === hubOverlay) window.closeModuleHub();
+            });
+        }
     });
 
 })();

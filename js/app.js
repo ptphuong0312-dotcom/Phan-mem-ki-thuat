@@ -133,18 +133,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Đợi một chút để đảm bảo file data.js đã được parse nếu nó lớn
     setTimeout(filterData, 100);
 
-    // Xử lý Main Sections (Ren / Dung Sai)
+    // Xử lý Main Sections (Ren / Dung Sai / Hộp Số / Độ Nhám / Module Hub)
     const mainNavItems = document.querySelectorAll('.main-nav-item');
-    const mainSections = document.querySelectorAll('.main-section');
     mainNavItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
-            mainNavItems.forEach(nav => nav.classList.remove('active'));
-            mainSections.forEach(sec => sec.classList.remove('active'));
-
-            item.classList.add('active');
             const targetId = item.getAttribute('data-target');
-            document.getElementById(targetId).classList.add('active');
+            if (targetId === 'moduleHub') {
+                if (window.openModuleHub) window.openModuleHub();
+                return;
+            }
+            if (window.switchMainModule) {
+                window.switchMainModule(targetId);
+            } else {
+                mainNavItems.forEach(nav => nav.classList.remove('active'));
+                document.querySelectorAll('.main-section').forEach(sec => sec.classList.remove('active'));
+                item.classList.add('active');
+                if (targetId) document.getElementById(targetId)?.classList.add('active');
+            }
         });
     });
 

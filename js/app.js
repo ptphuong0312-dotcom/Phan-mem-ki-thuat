@@ -168,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./service-worker.js')
                 .then(registration => {
+                    registration.update();
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
                 })
                 .catch(err => {

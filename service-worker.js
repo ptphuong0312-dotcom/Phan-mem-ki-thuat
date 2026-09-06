@@ -1,8 +1,9 @@
-const CACHE_NAME = 'troly-cokhixuong-v20-clean';
+const CACHE_NAME = 'cad-suite-v254-clean';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/favicon.ico',
   '/css/style.css',
   '/css/roughness.css',
   '/js/app.js',
@@ -23,6 +24,7 @@ const ASSETS_TO_CACHE = [
   '/js/roughness.js',
   '/assets/icons/app-icon-192x192.png',
   '/assets/icons/app-icon-512x512.png',
+  '/assets/icons/favicon-32x32.png',
   'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap'
 ];

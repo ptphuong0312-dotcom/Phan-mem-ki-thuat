@@ -11,7 +11,7 @@
     <meta http-equiv="Expires" content="0">
     <script>
       (function() {
-        const CURRENT_VERSION = 'v2.5.3_20260906_CLEAN_PORTAL';
+        const CURRENT_VERSION = 'v2.5.4_20260906_NEW_ICON';
         if (localStorage.getItem('app_installed_version') !== CURRENT_VERSION) {
           localStorage.setItem('app_installed_version', CURRENT_VERSION);
           if ('caches' in window) {
@@ -31,13 +31,16 @@
       })();
     </script>
     
-    <!-- PWA & iOS Support -->
-    <link rel="manifest" href="manifest.json?v=2.5.3">
+    <!-- Favicon, PWA & iOS Support -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2.5.4">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png?v=2.5.4">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png?v=2.5.4">
+    <link rel="apple-touch-icon" href="assets/icons/app-icon-192x192.png?v=2.5.4">
+    <link rel="manifest" href="manifest.json?v=2.5.4">
     <meta name="theme-color" content="#070a13">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Cơ Khí CAD Suite">
-    <link rel="apple-touch-icon" href="assets/icons/app-icon-192x192.png">
     
     <!-- Google Fonts & FontAwesome 6.4 Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -67,9 +70,9 @@
     </script>
     
     <!-- CSS Theme & Styles -->
-    <link rel="stylesheet" href="assets/css/common-theme.css?v=2.5.3">
-    <link rel="stylesheet" href="css/style.css?v=2.5.3">
-    <link rel="stylesheet" href="css/roughness.css?v=2.5.3">
+    <link rel="stylesheet" href="assets/css/common-theme.css?v=2.5.4">
+    <link rel="stylesheet" href="css/style.css?v=2.5.4">
+    <link rel="stylesheet" href="css/roughness.css?v=2.5.4">
 </head>
 <body class="bg-[#070a13] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white" style="background-color: #070a13; color: #f1f5f9; min-height: 100vh; display: flex; flex-direction: column;">
 
@@ -82,7 +85,7 @@
         <div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
             <div style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="switchMainModule('sectionPortal')">
                 <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #06b6d4, #2563eb, #4f46e5); padding: 2px; box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="assets/icons/app-icon-192x192.png" alt="CAD Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                    <img src="assets/icons/app-icon-192x192.png?v=2.5.4" alt="CAD Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
                 </div>
                 <div>
                     <h1 style="font-size: 19px; font-weight: 800; tracking: -0.025em; background: linear-gradient(to right, #ffffff, #e2e8f0, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; line-height: 1.2;">
@@ -8473,23 +8476,23 @@ window.runCalcOptimal = function() {
     }
     </script>
 
-    <script src="js/data.js?v=2.5.3"></script>
-    <script src="js/iso286_data.js?v=2.5.3"></script>
-    <script src="js/app.js?v=2.5.3"></script>
-    <script src="js/reverseLookup.js?v=2.5.3"></script>
-    <script src="js/toleranceCalculator.js?v=2.5.3"></script>
-    <script src="js/iso286_clean.js?v=2.5.3"></script>
-    <script src="js/keywayData.js?v=2.5.3"></script>
-    <script src="js/keywayCalculator.js?v=2.5.3"></script>
-    <script src="js/isoCalculatorV2.js?v=2.5.3"></script>
-    <script src="js/drawProfile.js?v=2.5.3"></script>
-    <script src="js/cameraUtils.js?v=2.5.3"></script>
-    <script src="js/fitApplications.js?v=2.5.3"></script>
-    <script src="js/isoUI.js?v=2.5.3"></script>
-    <script src="js/gearRatioCalculator.js?v=2.5.3"></script>
-    <script src="js/roughness.js?v=2.5.3"></script>
-    <script src="js/gdtData.js?v=2.5.3"></script>
-    <script src="js/gdtUI.js?v=2.5.3"></script>
-    <script src="js/smartAssistant.js?v=2.5.3"></script>
+    <script src="js/data.js?v=2.5.4"></script>
+    <script src="js/iso286_data.js?v=2.5.4"></script>
+    <script src="js/app.js?v=2.5.4"></script>
+    <script src="js/reverseLookup.js?v=2.5.4"></script>
+    <script src="js/toleranceCalculator.js?v=2.5.4"></script>
+    <script src="js/iso286_clean.js?v=2.5.4"></script>
+    <script src="js/keywayData.js?v=2.5.4"></script>
+    <script src="js/keywayCalculator.js?v=2.5.4"></script>
+    <script src="js/isoCalculatorV2.js?v=2.5.4"></script>
+    <script src="js/drawProfile.js?v=2.5.4"></script>
+    <script src="js/cameraUtils.js?v=2.5.4"></script>
+    <script src="js/fitApplications.js?v=2.5.4"></script>
+    <script src="js/isoUI.js?v=2.5.4"></script>
+    <script src="js/gearRatioCalculator.js?v=2.5.4"></script>
+    <script src="js/roughness.js?v=2.5.4"></script>
+    <script src="js/gdtData.js?v=2.5.4"></script>
+    <script src="js/gdtUI.js?v=2.5.4"></script>
+    <script src="js/smartAssistant.js?v=2.5.4"></script>
 </body>
 </html>

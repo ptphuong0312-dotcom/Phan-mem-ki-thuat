@@ -1,20 +1,21 @@
 {
-  "name": "Trợ lý cơ khí xưởng",
-  "short_name": "Trợ Lý Cơ Khí",
-  "start_url": ".",
+  "name": "Cơ Khí Chế Tạo CAD Suite - By SirPhuong",
+  "short_name": "Cơ Khí CAD",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#0ea5e9",
-  "description": "Trợ lý cơ khí xưởng - Tra cứu ren, dung sai ISO 286, độ nhám & hộp số công nghiệp",
+  "background_color": "#070a13",
+  "theme_color": "#070a13",
+  "description": "Nền tảng tra cứu tiêu chuẩn & thiết kế cơ khí chế tạo: Ren ISO, Dung sai ISO 286, Độ nhám ISO 1302, Hộp số công nghiệp 2D/3D, GD&T ISO 1101",
   "icons": [
     {
-      "src": "/assets/icons/app-icon-192x192.png",
+      "src": "assets/icons/app-icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/icons/app-icon-512x512.png",
+      "src": "assets/icons/app-icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

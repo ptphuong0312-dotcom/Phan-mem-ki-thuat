@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Python & Virtual Environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Local Backups
+backups/
+
+# Archived legacy subprojects & temporary scripts
+ITRECHNER/
+isofits-0.0.1/
+scripts_archive/
+tai lieu/
+test_*.js
+test_*.py
+build_*.py
+patch_*.py
+rebuild_*.py
+strip_panels.py
+generate_*.py
+update_*.py
+make_icon.py
+
+# System & IDE
+.DS_Store
+Thumbs.db
+*.log
+.gemini/

@@ -1,0 +1,27 @@
+{
+  "name": "tro-ly-co-khi-xuong",
+  "version": "2.0.0",
+  "description": "Trợ lý cơ khí xưởng - Tra cứu ren, dung sai ISO 286, độ nhám & cẩm nang 23 hộp số công nghiệp",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptphuong0312-dotcom/Phan-mem-ki-thuat.git"
+  },
+  "keywords": [
+    "co-khi",
+    "tra-cuu-ren",
+    "dung-sai-iso",
+    "iso-286",
+    "hop-so-cong-nghiep",
+    "pwa"
+  ],
+  "author": "ptphuong0312-dotcom",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ptphuong0312-dotcom/Phan-mem-ki-thuat/issues"
+  },
+  "homepage": "https://github.com/ptphuong0312-dotcom/Phan-mem-ki-thuat#readme"
+}

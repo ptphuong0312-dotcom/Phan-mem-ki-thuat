@@ -439,7 +439,19 @@
         });
         targetSec.classList.add('active');
 
-        // 2. Update Module Pills Bar
+        // 2. Toggle in-module navigation bar visibility
+        const inModuleNav = document.getElementById('inModuleNav');
+        if (inModuleNav) {
+            inModuleNav.style.display = (moduleId === 'sectionPortal') ? 'none' : 'flex';
+        }
+
+        // 3. Sync quick select dropdown
+        const quickSelect = document.getElementById('moduleQuickSelect');
+        if (quickSelect && moduleId !== 'sectionPortal') {
+            quickSelect.value = moduleId;
+        }
+
+        // 4. Update Module Pills Bar
         document.querySelectorAll('.module-pill-btn').forEach(btn => {
             const isMatch = btn.getAttribute('data-target') === moduleId;
             btn.classList.toggle('active', isMatch);
@@ -448,26 +460,73 @@
             }
         });
 
-        // 3. Update Bottom Nav
+        // 5. Update Bottom Nav
         document.querySelectorAll('.main-nav-item').forEach(item => {
             item.classList.toggle('active', item.getAttribute('data-target') === moduleId);
         });
 
-        // 4. Update Module Hub Cards
+        // 6. Update Module Hub Cards
         document.querySelectorAll('.module-hub-card').forEach(card => {
             card.classList.toggle('active', card.getAttribute('data-target') === moduleId);
         });
 
-        // 5. Save state
+        // 7. Save state
         try {
             localStorage.setItem('active_module_id', moduleId);
         } catch (e) {}
 
-        // 6. Close Hub if open
+        // 8. Close Hub if open
         window.closeModuleHub();
 
-        // 7. Scroll smoothly to top of module
+        // 9. Scroll smoothly to top of module
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Portal Hero Filter Function (matching banh-rang.vercel.app)
+    window.filterTools = function() {
+        const input = (document.getElementById('portalSearchInput')?.value || '').toLowerCase().trim();
+        const cards = document.querySelectorAll('#toolsGrid .tool-card');
+        let count = 0;
+
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (!input || text.includes(input)) {
+                card.style.display = 'flex';
+                count++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        const toolCount = document.getElementById('toolCount');
+        if (toolCount) {
+            toolCount.textContent = `Hiển thị ${count} / ${cards.length} module`;
+        }
+    };
+
+    // PWA Mobile Installation Controller
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const btn = document.getElementById('btnPWAInstall');
+        if (btn) {
+            btn.innerHTML = '<i class="fa-solid fa-download" style="font-size: 14px;"></i> <span>Cài Đặt App Ngay</span>';
+        }
+    });
+
+    window.handlePWAInstall = function() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                deferredPrompt = null;
+            });
+        } else {
+            const guide = document.getElementById('iosInstallGuide');
+            if (guide) {
+                guide.style.display = (guide.style.display === 'none' || !guide.style.display) ? 'block' : 'none';
+            }
+        }
     };
 
     window.openModuleHub = function() {
@@ -520,10 +579,19 @@
 
         if (window.initGdtModule) window.initGdtModule();
 
-        // Restore active module if saved
+        // Restore active module or default to Portal
         const savedModule = localStorage.getItem('active_module_id');
         if (savedModule && document.getElementById(savedModule)) {
             window.switchMainModule(savedModule);
+        } else {
+            window.switchMainModule('sectionPortal');
+        }
+
+        // Detect iOS for custom instruction text
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const pwaText = document.getElementById('pwaInstructionText');
+        if (isIOS && pwaText) {
+            pwaText.innerHTML = 'Được tối ưu riêng cho <strong>iPhone & iPad (iOS Safari)</strong>. Dùng 100% Offline không cần mạng.';
         }
 
         // Close Hub on Esc or click overlay background

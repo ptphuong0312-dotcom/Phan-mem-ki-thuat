@@ -11,7 +11,7 @@
     <meta http-equiv="Expires" content="0">
     <script>
       (function() {
-        const CURRENT_VERSION = 'v2.4.0_20260906_MODULE_HUB';
+        const CURRENT_VERSION = 'v2.5.0_20260906_BEARING_GDT';
         if (localStorage.getItem('app_installed_version') !== CURRENT_VERSION) {
           localStorage.setItem('app_installed_version', CURRENT_VERSION);
           if ('caches' in window) {
@@ -32,14 +32,14 @@
     </script>
     
     <!-- PWA & iOS Support -->
-    <link rel="manifest" href="manifest.json?v=2.4.0">
+    <link rel="manifest" href="manifest.json?v=2.5.0">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Trợ lý cơ khí xưởng">
     <link rel="apple-touch-icon" href="assets/icons/app-icon-192x192.png">
     
-    <link rel="stylesheet" href="css/style.css?v=2.4.0">
+    <link rel="stylesheet" href="css/style.css?v=2.5.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS (No Preflight) -->
@@ -49,7 +49,7 @@
         corePlugins: { preflight: false }
       }
     </script>
-    <link rel="stylesheet" href="css/roughness.css?v=2.4.0">
+    <link rel="stylesheet" href="css/roughness.css?v=2.5.0">
 
 </head>
 <body>
@@ -90,6 +90,14 @@
                 <button type="button" class="module-pill-btn" data-target="sectionRoughness" onclick="switchMainModule('sectionRoughness')">
                     <span class="pill-icon">🔍</span>
                     <span>ĐỘ NHÁM BỀ MẶT</span>
+                </button>
+                <button type="button" class="module-pill-btn" data-target="sectionBearing" onclick="switchMainModule('sectionBearing')">
+                    <span class="pill-icon">⭕</span>
+                    <span>VÒNG BI BẠC ĐẠN</span>
+                </button>
+                <button type="button" class="module-pill-btn" data-target="sectionGdt" onclick="switchMainModule('sectionGdt')">
+                    <span class="pill-icon">📐</span>
+                    <span>GD&amp;T HÌNH HỌC</span>
                 </button>
             </div>
             <button type="button" class="module-pill-hub-trigger" onclick="openModuleHub()" title="Mở trung tâm quản lý tất cả module">
@@ -191,27 +199,34 @@
                         </div>
                     </div>
 
-                    <!-- GROUP 4: MODULE MỞ RỘNG (KẾ HOẠCH PHÁT TRIỂN) -->
+                    <!-- GROUP 4: DUNG SAI HÌNH HỌC & Ổ TRỤC -->
                     <div class="module-hub-group">
-                        <div class="module-hub-group-title">🚀 MODULE MỞ RỘNG (SẮP RA MẮT)</div>
+                        <div class="module-hub-group-title">🎯 DUNG SAI CHÍNH XÁC &amp; Ổ TRỤC</div>
                         <div class="module-hub-grid">
-                            <div class="module-hub-card disabled" title="Đang được biên soạn dữ liệu">
-                                <div class="module-card-header">
-                                    <div class="module-card-title"><span>📐</span> GD&amp;T - Dung Sai Hình Học</div>
-                                    <span class="module-card-badge" style="background: #334155; color: #94a3b8;">ISO 1101</span>
-                                </div>
-                                <p class="module-card-desc">Độ đảo hướng tâm, độ đồng tâm, độ phẳng, độ song song, độ vuông góc và vị trí tương quan.</p>
-                                <div class="module-card-status" style="color: #64748b;">Đang biên soạn dữ liệu</div>
-                            </div>
-
-                            <div class="module-hub-card disabled" title="Đang được biên soạn dữ liệu">
+                            <div class="module-hub-card" data-target="sectionBearing" onclick="switchMainModule('sectionBearing')">
                                 <div class="module-card-header">
                                     <div class="module-card-title"><span>⭕</span> Tra Cứu Vòng Bi Bạc Đạn</div>
-                                    <span class="module-card-badge" style="background: #334155; color: #94a3b8;">SKF / FAG / NSK</span>
+                                    <span class="module-card-badge" style="background: rgba(2, 132, 199, 0.2); color: #38bdf8;">SKF / FAG / NSK</span>
                                 </div>
-                                <p class="module-card-desc">Vòng bi cầu, bi đũa, tang trống tự lựa, bi côn, tải trọng C, C0 và khe hở vòng bi CN, C3.</p>
-                                <div class="module-card-status" style="color: #64748b;">Đang biên soạn dữ liệu</div>
+                                <p class="module-card-desc">Bi cầu 60/62/63xx, tang trống 222/223xx, bi đũa, bi côn. Kích thước, tải trọng, khe hở C3 và măng xông.</p>
+                                <div class="module-card-status" style="color: #94a3b8;">Nhấn để mở</div>
                             </div>
+
+                            <div class="module-hub-card" data-target="sectionGdt" onclick="switchMainModule('sectionGdt')">
+                                <div class="module-card-header">
+                                    <div class="module-card-title"><span>📐</span> GD&amp;T - Dung Sai Hình Học</div>
+                                    <span class="module-card-badge" style="background: rgba(124, 58, 237, 0.2); color: #c084fc;">ISO 1101</span>
+                                </div>
+                                <p class="module-card-desc">14 Ký hiệu hình học, khung Feature Control Frame, hướng dẫn gá đặt đo kiểm đồng hồ so thực tế.</p>
+                                <div class="module-card-status" style="color: #94a3b8;">Nhấn để mở</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GROUP 5: MODULE MỞ RỘNG (KẾ HOẠCH PHÁT TRIỂN) -->
+                    <div class="module-hub-group">
+                        <div class="module-hub-group-title">🚀 MODULE MỞ RỘNG (TIẾP THEO)</div>
+                        <div class="module-hub-grid">
 
                             <div class="module-hub-card disabled" title="Đang được biên soạn dữ liệu">
                                 <div class="module-card-header">
@@ -7721,6 +7736,298 @@
             </div>
         </div>
 
+        <!-- Main Section: VÒNG BI BẠC ĐẠN -->
+        <div id="sectionBearing" class="main-section" style="padding: 20px; color: #e2e8f0; font-family: sans-serif;">
+            
+            <!-- Header Banner -->
+            <div style="background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #0284c7; width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                        ⭕
+                    </div>
+                    <div>
+                        <h2 style="margin: 0; font-size: 20px; font-weight: bold; color: white;">TRA CỨU VÒNG BI / BẠC ĐẠN CÔNG NGHIỆP</h2>
+                        <div style="font-size: 13px; color: #94a3b8; margin-top: 3px;">Tiêu chuẩn SKF • FAG • NSK • NTN • Timken — Kích thước (d × D × B), Tải trọng, Khe hở C3 &amp; Dung sai trục/vỏ.</div>
+                    </div>
+                </div>
+
+                <!-- Sub-tabs: Tra mã vs Tra ngược thước kẹp -->
+                <div style="display: flex; gap: 10px; margin-top: 15px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; flex-wrap: wrap;">
+                    <button type="button" id="btnBrgTabCode" onclick="document.getElementById('brgViewCode').style.display='block'; document.getElementById('brgViewReverse').style.display='none'; this.style.background='#0284c7'; this.style.color='#fff'; document.getElementById('btnBrgTabRev').style.background='#1e293b'; document.getElementById('btnBrgTabRev').style.color='#94a3b8';" style="background: #0284c7; border: 1px solid #38bdf8; color: #ffffff; padding: 8px 16px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer;">
+                        🔍 Tra Cứu Theo Mã Vòng Bi
+                    </button>
+                    <button type="button" id="btnBrgTabRev" onclick="document.getElementById('brgViewCode').style.display='none'; document.getElementById('brgViewReverse').style.display='block'; this.style.background='#0284c7'; this.style.color='#fff'; document.getElementById('btnBrgTabCode').style.background='#1e293b'; document.getElementById('btnBrgTabCode').style.color='#94a3b8';" style="background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 8px 16px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer;">
+                        📏 Tra Ngược Kích Thước (Thước Kẹp)
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW A: TRA CỨU THEO MÃ & CHỦNG LOẠI -->
+            <div id="brgViewCode" style="display: block;">
+                <!-- Category Filter Chips -->
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;">
+                    <button type="button" class="gb-chip-btn active" onclick="filterBearingByType('ALL', this)">Tất cả</button>
+                    <button type="button" class="gb-chip-btn" onclick="filterBearingByType('Deep Groove', this)">Bi Cầu (60xx/62xx/63xx)</button>
+                    <button type="button" class="gb-chip-btn" onclick="filterBearingByType('Spherical', this)">Bi Tang Trống (222xx/223xx)</button>
+                    <button type="button" class="gb-chip-btn" onclick="filterBearingByType('Cylindrical', this)">Bi Đũa Trụ (NU/NJ)</button>
+                    <button type="button" class="gb-chip-btn" onclick="filterBearingByType('Tapered', this)">Bi Côn (302xx/322xx)</button>
+                    <button type="button" class="gb-chip-btn" onclick="filterBearingByType('Angular', this)">Bi Đỡ Chặn (72xx/73xx)</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; align-items: start;">
+                    <!-- Left: Search Box & List of Bearings -->
+                    <div style="background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 16px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                            <span style="color: #38bdf8; font-weight: bold; font-size: 13px;">DANH SÁCH VÒNG BI</span>
+                            <span id="bearingCountBadge" style="background: rgba(56,189,248,0.15); border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 12px;">-</span>
+                        </div>
+                        <div style="position: relative; margin-bottom: 12px;">
+                            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px;">🔎</span>
+                            <input type="text" id="bearingSearchInput" placeholder="Tìm mã (vd: 6205, 22220, NU 312)..." style="width: 100%; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 10px 12px 10px 36px; color: #f8fafc; font-size: 13px; outline: none; box-sizing: border-box;">
+                        </div>
+                        <div id="bearingListContainer" style="max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px;">
+                            <!-- Dynamically loaded items -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Bearing Specifications Detail Card -->
+                    <div id="bearingDetailCard" style="background: #0f172a; border: 1px solid #38bdf8; border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #1e293b; padding-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                            <div>
+                                <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: bold;">MÃ VÒNG BI TIÊU CHUẨN</span>
+                                <div id="brgDet_code" style="font-size: 28px; font-weight: 800; color: #38bdf8; font-family: monospace;">6208</div>
+                            </div>
+                            <span id="brgDet_type" style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold;">
+                                Bi Cầu Rãnh Sâu
+                            </span>
+                        </div>
+
+                        <!-- 3 Core Dimensions -->
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px;">
+                            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: center;">
+                                <div style="color: #94a3b8; font-size: 11px; font-weight: bold;">ĐƯỜNG KÍNH TRỤC (d)</div>
+                                <div id="brgDet_d" style="color: #f8fafc; font-size: 20px; font-weight: bold; font-family: monospace; margin-top: 4px;">40 mm</div>
+                            </div>
+                            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: center;">
+                                <div style="color: #94a3b8; font-size: 11px; font-weight: bold;">ĐƯỜNG KÍNH NGOÀI (D)</div>
+                                <div id="brgDet_D" style="color: #f8fafc; font-size: 20px; font-weight: bold; font-family: monospace; margin-top: 4px;">80 mm</div>
+                            </div>
+                            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: center;">
+                                <div style="color: #94a3b8; font-size: 11px; font-weight: bold;">BỀ RỘNG / DÀY (B)</div>
+                                <div id="brgDet_B" style="color: #f97316; font-size: 20px; font-weight: bold; font-family: monospace; margin-top: 4px;">18 mm</div>
+                            </div>
+                        </div>
+
+                        <!-- Load Capacity & Max Speed -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 15px;">
+                            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px;">
+                                <div style="color: #94a3b8; font-size: 11px;">Tải động (C):</div>
+                                <div id="brgDet_C" style="color: #38bdf8; font-weight: bold; font-size: 15px; margin-top: 2px;">32.5 kN</div>
+                            </div>
+                            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px;">
+                                <div style="color: #94a3b8; font-size: 11px;">Tải tĩnh (C₀):</div>
+                                <div id="brgDet_C0" style="color: #cbd5e1; font-weight: bold; font-size: 15px; margin-top: 2px;">19.0 kN</div>
+                            </div>
+                            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px;">
+                                <div style="color: #94a3b8; font-size: 11px;">Tốc độ (Mỡ):</div>
+                                <div id="brgDet_speedG" style="color: #4ade80; font-weight: bold; font-size: 14px; margin-top: 2px;">7.500 rpm</div>
+                            </div>
+                            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px;">
+                                <div style="color: #94a3b8; font-size: 11px;">Tốc độ (Dầu):</div>
+                                <div id="brgDet_speedO" style="color: #60a5fa; font-weight: bold; font-size: 14px; margin-top: 2px;">9.000 rpm</div>
+                            </div>
+                            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px;">
+                                <div style="color: #94a3b8; font-size: 11px;">Trọng lượng:</div>
+                                <div id="brgDet_weight" style="color: #cbd5e1; font-weight: bold; font-size: 14px; margin-top: 2px;">0.37 kg</div>
+                            </div>
+                        </div>
+
+                        <!-- Recommended Fits (Trục / Vỏ) -->
+                        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px 16px; margin-bottom: 15px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                                <span style="color: #f8fafc; font-weight: bold; font-size: 13px;">🔧 Khuyến Nghị Dung Sai Lắp Ghép (ISO 286):</span>
+                                <button type="button" onclick="jumpToIsoFit(parseFloat(document.getElementById('brgDet_d').innerText), 'k', '6')" style="background: rgba(56,189,248,0.15); border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; padding: 4px 8px; border-radius: 6px; cursor: pointer;">
+                                    📐 Mở Tính Dung Sai Trục ISO
+                                </button>
+                            </div>
+                            <div style="display: flex; gap: 20px; font-size: 13px; flex-wrap: wrap;">
+                                <div><span style="color: #94a3b8;">Ngỗng trục:</span> <strong id="brgDet_shaftFit" style="color: #38bdf8; font-family: monospace;">k6 / m6</strong> <span style="font-size: 11px; color: #64748b;">(Chặt nhẹ / trung gian)</span></div>
+                                <div><span style="color: #94a3b8;">Lỗ gối đỡ vỏ:</span> <strong id="brgDet_housingFit" style="color: #4ade80; font-family: monospace;">H7 / J7</strong> <span style="font-size: 11px; color: #64748b;">(Định tâm tháo lắp)</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Radial Clearance Table ISO 5753-1 -->
+                        <div style="margin-top: 15px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="color: #f8fafc; font-weight: bold; font-size: 13px;">📏 Khe Hở Hướng Tâm Chuẩn (ISO 5753-1):</span>
+                                <span style="color: #94a3b8; font-size: 11px;">Đơn vị: µm (Micromet)</span>
+                            </div>
+                            <div id="brgClearanceContainer">
+                                <!-- Dynamically rendered clearance cards -->
+                            </div>
+                        </div>
+
+                        <!-- Adapter Sleeve Container (Hidden if not applicable) -->
+                        <div id="brgSleeveBox" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW B: TRA NGƯỢC THEO THƯỚC KẸP -->
+            <div id="brgViewReverse" style="display: none;">
+                <div style="background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 20px; max-width: 700px; margin: 0 auto;">
+                    <h3 style="margin: 0 0 8px 0; color: #38bdf8; font-size: 16px; font-weight: bold;">ĐO KÍCH THƯỚC BẰNG THƯỚC KẸP ĐỂ TÌM MÃ VÒNG BI</h3>
+                    <p style="margin: 0 0 16px 0; font-size: 12px; color: #94a3b8;">Nhập 3 kích thước bạn đo được trên chi tiết cũ (d = lỗ trong, D = ngoài, B = bề dày):</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; font-weight: bold; margin-bottom: 4px;">Đường kính trong d (mm):</label>
+                            <input type="number" id="brgRev_d" placeholder="vd: 40" step="0.1" style="width: 100%; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 10px; color: #f8fafc; font-size: 16px; font-weight: bold; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; font-weight: bold; margin-bottom: 4px;">Đường kính ngoài D (mm):</label>
+                            <input type="number" id="brgRev_D" placeholder="vd: 80" step="0.1" style="width: 100%; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 10px; color: #f8fafc; font-size: 16px; font-weight: bold; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; font-weight: bold; margin-bottom: 4px;">Bề dày / rộng B (mm):</label>
+                            <input type="number" id="brgRev_B" placeholder="vd: 18" step="0.1" style="width: 100%; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 10px; color: #f8fafc; font-size: 16px; font-weight: bold; box-sizing: border-box;">
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="reverseLookupBearing()" style="width: 100%; background: #0284c7; border: 1px solid #38bdf8; color: white; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.2s;">
+                        🔍 TÌM KIẾM MÃ VÒNG BI TƯƠNG ỨNG
+                    </button>
+
+                    <div id="brgRevResults" style="margin-top: 16px;"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Main Section: GD&T DUNG SAI HÌNH HỌC -->
+        <div id="sectionGdt" class="main-section" style="padding: 20px; color: #e2e8f0; font-family: sans-serif;">
+            
+            <!-- Header Banner -->
+            <div style="background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="background: #7c3aed; width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                        📐
+                    </div>
+                    <div>
+                        <h2 style="margin: 0; font-size: 20px; font-weight: bold; color: white;">GD&amp;T - DUNG SAI HÌNH HỌC &amp; VỊ TRÍ</h2>
+                        <div style="font-size: 13px; color: #94a3b8; margin-top: 3px;">Tiêu chuẩn quốc tế ISO 1101 &amp; ASME Y14.5 — 14 Ký hiệu hình học, Khung Feature Control Frame &amp; Hướng dẫn đo kiểm thực tế.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Filter Chips -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;">
+                <button type="button" class="gb-chip-btn active" onclick="filterGdtCategory('ALL', this)">Tất Cả 14 Ký Hiệu</button>
+                <button type="button" class="gb-chip-btn" onclick="filterGdtCategory('Hình Dạng', this)">Hình Dạng (Form)</button>
+                <button type="button" class="gb-chip-btn" onclick="filterGdtCategory('Hướng', this)">Hướng (Orientation)</button>
+                <button type="button" class="gb-chip-btn" onclick="filterGdtCategory('Vị Trí', this)">Vị Trí (Location)</button>
+                <button type="button" class="gb-chip-btn" onclick="filterGdtCategory('Độ Đảo', this)">Độ Đảo (Runout)</button>
+                <button type="button" class="gb-chip-btn" onclick="filterGdtCategory('Biên Dạng', this)">Biên Dạng (Profile)</button>
+            </div>
+
+            <!-- 14 Symbol Selection Grid -->
+            <div id="gdtSymbolGrid" class="gdt-symbol-grid"></div>
+
+            <!-- Detailed Explanation & CAD Feature Control Frame Builder -->
+            <div style="background: #0f172a; border: 1px solid #7c3aed; border-radius: 14px; padding: 24px; box-shadow: 0 4px 25px rgba(0,0,0,0.4);">
+                
+                <!-- Title & Category -->
+                <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1e293b; padding-bottom: 14px; margin-bottom: 20px; flex-wrap: wrap; gap: 8px;">
+                    <div id="gdtDetailTitle" style="font-size: 22px; font-weight: 800; color: #f8fafc; display: flex; align-items: center;">
+                        <span style="color: #38bdf8; font-size: 26px; margin-right: 8px;">⎯</span> Độ Thẳng (Straightness)
+                    </div>
+                    <span id="gdtDetailCategory" style="background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; color: #c084fc; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: bold;">
+                        Hình Dạng (Form)
+                    </span>
+                </div>
+
+                <!-- CAD Feature Control Frame Display -->
+                <div style="margin-bottom: 15px;">
+                    <div style="font-size: 12px; color: #94a3b8; font-weight: bold; margin-bottom: 6px;">MÔ PHỎNG KHUNG GHI BẢN VẼ (FEATURE CONTROL FRAME - CAD):</div>
+                    <div class="fcf-display-wrapper">
+                        <div id="fcfDisplayFrame"></div>
+                    </div>
+                </div>
+
+                <!-- Interactive FCF Inputs -->
+                <div style="background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
+                    <div style="font-size: 12px; color: #38bdf8; font-weight: bold; margin-bottom: 10px;">⚙️ TÙY CHỈNH THÔNG SỐ KHUNG DUNG SAI:</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;">
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px;">Ký hiệu:</label>
+                            <input type="text" id="fcfInput_sym" value="⎯" readonly style="width: 100%; background: #0f172a; border: 1px solid #475569; border-radius: 6px; padding: 8px; color: #38bdf8; font-size: 16px; font-weight: bold; text-align: center; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px;">Trị số dung sai:</label>
+                            <input type="text" id="fcfInput_val" value="0.02" oninput="updateFeatureControlFrame()" style="width: 100%; background: #0f172a; border: 1px solid #475569; border-radius: 6px; padding: 8px; color: #fbbf24; font-size: 14px; font-weight: bold; text-align: center; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px;">Điều kiện (Mod):</label>
+                            <select id="fcfInput_mod" onchange="updateFeatureControlFrame()" style="width: 100%; background: #0f172a; border: 1px solid #475569; border-radius: 6px; padding: 8px; color: #f8fafc; font-size: 13px; font-weight: bold; box-sizing: border-box;">
+                                <option value="">Không (RFS)</option>
+                                <option value="Ⓜ">Ⓜ (MMC - Max Material)</option>
+                                <option value="Ⓛ">Ⓛ (LMC - Least Material)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px;">Chuẩn chính (A):</label>
+                            <input type="text" id="fcfInput_datumA" value="" placeholder="vd: A" oninput="updateFeatureControlFrame()" style="width: 100%; background: #0f172a; border: 1px solid #475569; border-radius: 6px; padding: 8px; color: #4ade80; font-size: 14px; font-weight: bold; text-align: center; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px;">Chuẩn phụ (B):</label>
+                            <input type="text" id="fcfInput_datumB" value="" placeholder="vd: B" oninput="updateFeatureControlFrame()" style="width: 100%; background: #0f172a; border: 1px solid #475569; border-radius: 6px; padding: 8px; color: #4ade80; font-size: 14px; font-weight: bold; text-align: center; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px;">Chuẩn 3 (C):</label>
+                            <input type="text" id="fcfInput_datumC" value="" placeholder="vd: C" oninput="updateFeatureControlFrame()" style="width: 100%; background: #0f172a; border: 1px solid #475569; border-radius: 6px; padding: 8px; color: #4ade80; font-size: 14px; font-weight: bold; text-align: center; box-sizing: border-box;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deep Technical Info Tabs / Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                    <!-- Card 1: Tolerance Zone -->
+                    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 16px;">
+                        <div style="color: #38bdf8; font-weight: bold; font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>🌐</span> BẢN CHẤT MIỀN DUNG SAI:
+                        </div>
+                        <p id="gdtDetailZone" style="color: #cbd5e1; font-size: 13px; line-height: 1.5; margin: 0;">-</p>
+                    </div>
+
+                    <!-- Card 2: Workshop Measurement Method -->
+                    <div style="background: #1e293b; border: 1px solid #f59e0b; border-radius: 10px; padding: 16px; box-shadow: 0 0 10px rgba(245,158,11,0.1);">
+                        <div style="color: #f59e0b; font-weight: bold; font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>🧰</span> PHƯƠNG PHÁP ĐO KIỂM THỰC TẾ TẠI XƯỞNG:
+                        </div>
+                        <p id="gdtDetailMethod" style="color: #f8fafc; font-size: 13px; line-height: 1.5; margin: 0;">-</p>
+                    </div>
+
+                    <!-- Card 3: Practical Machinery Applications -->
+                    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 16px;">
+                        <div style="color: #4ade80; font-weight: bold; font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>🏭</span> VÍ DỤ ỨNG DỤNG TRONG CHẾ TẠO MÁY:
+                        </div>
+                        <p id="gdtDetailApp" style="color: #cbd5e1; font-size: 13px; line-height: 1.5; margin: 0;">-</p>
+                    </div>
+
+                    <!-- Card 4: ISO 1101 Standard Guidelines -->
+                    <div style="background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 16px;">
+                        <div style="color: #c084fc; font-weight: bold; font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span>📖</span> QUY TẮC TIÊU CHUẨN ISO 1101 / ASME Y14.5:
+                        </div>
+                        <p id="gdtDetailRule" style="color: #cbd5e1; font-size: 13px; line-height: 1.5; margin: 0;">-</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
 <script>
 // Gearbox Master JavaScript Object & Functions
 window.GearCalc = {
@@ -8134,21 +8441,25 @@ window.runCalcOptimal = function() {
     }
     </script>
 
-    <script src="js/data.js?v=2.4.0"></script>
-    <script src="js/iso286_data.js?v=2.4.0"></script>
-    <script src="js/app.js?v=2.4.0"></script>
-    <script src="js/reverseLookup.js?v=2.4.0"></script>
-    <script src="js/toleranceCalculator.js?v=2.4.0"></script>
-    <script src="js/iso286_clean.js?v=2.4.0"></script>
-    <script src="js/keywayData.js?v=2.4.0"></script>
-    <script src="js/keywayCalculator.js?v=2.4.0"></script>
-    <script src="js/isoCalculatorV2.js?v=2.4.0"></script>
-    <script src="js/drawProfile.js?v=2.4.0"></script>
-    <script src="js/cameraUtils.js?v=2.4.0"></script>
-    <script src="js/fitApplications.js?v=2.4.0"></script>
-    <script src="js/isoUI.js?v=2.4.0"></script>
-    <script src="js/gearRatioCalculator.js?v=2.4.0"></script>
-    <script src="js/roughness.js?v=2.4.0"></script>
-    <script src="js/smartAssistant.js?v=2.4.0"></script>
+    <script src="js/data.js?v=2.5.0"></script>
+    <script src="js/iso286_data.js?v=2.5.0"></script>
+    <script src="js/app.js?v=2.5.0"></script>
+    <script src="js/reverseLookup.js?v=2.5.0"></script>
+    <script src="js/toleranceCalculator.js?v=2.5.0"></script>
+    <script src="js/iso286_clean.js?v=2.5.0"></script>
+    <script src="js/keywayData.js?v=2.5.0"></script>
+    <script src="js/keywayCalculator.js?v=2.5.0"></script>
+    <script src="js/isoCalculatorV2.js?v=2.5.0"></script>
+    <script src="js/drawProfile.js?v=2.5.0"></script>
+    <script src="js/cameraUtils.js?v=2.5.0"></script>
+    <script src="js/fitApplications.js?v=2.5.0"></script>
+    <script src="js/isoUI.js?v=2.5.0"></script>
+    <script src="js/gearRatioCalculator.js?v=2.5.0"></script>
+    <script src="js/roughness.js?v=2.5.0"></script>
+    <script src="js/bearingData.js?v=2.5.0"></script>
+    <script src="js/bearingCalculator.js?v=2.5.0"></script>
+    <script src="js/gdtData.js?v=2.5.0"></script>
+    <script src="js/gdtUI.js?v=2.5.0"></script>
+    <script src="js/smartAssistant.js?v=2.5.0"></script>
 </body>
 </html>

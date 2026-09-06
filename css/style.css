@@ -1794,3 +1794,151 @@ svg#toleranceSvg {
     margin-top: 4px;
 }
 
+/* ========================================================
+   6. BEARING LOOKUP & GD&T MODULE STYLES
+   ======================================================== */
+
+/* Bearing List Item */
+.bearing-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.bearing-list-item:hover {
+    background: #243248;
+    border-color: #38bdf8;
+    transform: translateX(2px);
+}
+
+.bearing-list-item.active {
+    background: linear-gradient(145deg, #1e293b, #1e3a8a);
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
+/* GD&T Symbol Grid & Cards */
+.gdt-symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.gdt-symbol-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.gdt-symbol-card:hover {
+    background: #243248;
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+}
+
+.gdt-symbol-card.active {
+    background: linear-gradient(135deg, #1e293b, #172554);
+    border-color: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+.gdt-card-icon {
+    font-size: 24px;
+    color: #38bdf8;
+    line-height: 1;
+    min-width: 32px;
+    text-align: center;
+    font-family: monospace;
+}
+
+.gdt-card-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.gdt-card-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #f8fafc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gdt-card-en {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Feature Control Frame (FCF) CAD Display */
+.fcf-display-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: #090d16;
+    border: 1px dashed #334155;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.fcf-box {
+    display: inline-flex;
+    border: 2px solid #e2e8f0;
+    background: #0f172a;
+    border-radius: 2px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.fcf-cell {
+    border-right: 2px solid #e2e8f0;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', monospace;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f8fafc;
+    min-width: 44px;
+    text-align: center;
+}
+
+.fcf-cell:last-child {
+    border-right: none;
+}
+
+.fcf-symbol {
+    color: #38bdf8;
+    font-size: 1.5rem;
+    padding: 6px 12px;
+}
+
+.fcf-tolerance {
+    color: #fbbf24;
+    padding: 8px 16px;
+    letter-spacing: 0.05em;
+}
+
+.fcf-datum {
+    color: #4ade80;
+    padding: 8px 14px;
+}
+

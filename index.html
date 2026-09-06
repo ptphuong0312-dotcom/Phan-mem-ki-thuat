@@ -11,7 +11,7 @@
     <meta http-equiv="Expires" content="0">
     <script>
       (function() {
-        const CURRENT_VERSION = 'v2.2.0_20260906_FORCE_UPDATE';
+        const CURRENT_VERSION = 'v2.3.0_20260906_SMART_UI';
         if (localStorage.getItem('app_installed_version') !== CURRENT_VERSION) {
           localStorage.setItem('app_installed_version', CURRENT_VERSION);
           if ('caches' in window) {
@@ -32,14 +32,14 @@
     </script>
     
     <!-- PWA & iOS Support -->
-    <link rel="manifest" href="manifest.json?v=2.2.0">
+    <link rel="manifest" href="manifest.json?v=2.3.0">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Trợ lý cơ khí xưởng">
     <link rel="apple-touch-icon" href="assets/icons/app-icon-192x192.png">
     
-    <link rel="stylesheet" href="css/style.css?v=2.2.0">
+    <link rel="stylesheet" href="css/style.css?v=2.3.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS (No Preflight) -->
@@ -49,7 +49,7 @@
         corePlugins: { preflight: false }
       }
     </script>
-    <link rel="stylesheet" href="css/roughness.css?v=2.2.0">
+    <link rel="stylesheet" href="css/roughness.css?v=2.3.0">
 
 </head>
 <body>
@@ -62,6 +62,15 @@
             </button>
         </header>
 
+        <!-- Smart Universal Search Bar -->
+        <div class="smart-search-wrapper" id="smartSearchBarContainer">
+            <div class="smart-search-box">
+                <span class="smart-search-icon">🔍</span>
+                <input type="text" id="smartGlobalInput" class="smart-search-input" placeholder="Tìm nhanh thông minh (vd: M16, 30H7/k6, Ra 0.8, B3SH 18, lò nung...)" autocomplete="off">
+                <span class="smart-search-badge">/ hoặc Ctrl+K</span>
+            </div>
+            <div id="smartSearchDropdown" class="smart-search-dropdown"></div>
+        </div>
         
         <!-- Main Section: REN -->
         <div id="sectionRen" class="main-section active">
@@ -246,6 +255,21 @@
         <div id="tabTolerance" class="tab-content active">
             <h2 class="section-title">Hệ Thống Lỗ, Trục & Then Bằng</h2>
             <p class="section-desc">Công cụ tra cứu chuẩn ISO 286 & DIN 6885-1 (Then Bằng)</p>
+
+            <!-- Smart Fit Presets (1-Touch) -->
+            <div class="smart-presets-container" id="smartFitPresetsContainer">
+                <div class="smart-presets-title">⚡ Gợi Ý Kiểu Lắp Thông Dụng (1 Chạm):</div>
+                <div class="smart-presets-list">
+                    <button type="button" class="smart-preset-btn" data-preset="brg_shaft" onclick="applyFitPreset('brg_shaft')">🔧 Vòng Bi Lên Trục (k6)</button>
+                    <button type="button" class="smart-preset-btn" data-preset="brg_hole" onclick="applyFitPreset('brg_hole')">⭕ Vòng Bi Vào Lỗ Vỏ (H7)</button>
+                    <button type="button" class="smart-preset-btn" data-preset="gear_key" onclick="applyFitPreset('gear_key')">⚙️ Bánh Răng Có Then (H7/js6)</button>
+                    <button type="button" class="smart-preset-btn" data-preset="press_fit" onclick="applyFitPreset('press_fit')">🔒 Ép Độ Dôi Tải Nặng (H7/r6)</button>
+                    <button type="button" class="smart-preset-btn" data-preset="bushing" onclick="applyFitPreset('bushing')">🔄 Trục Quay Bạc Trượt (H7/f7)</button>
+                    <button type="button" class="smart-preset-btn" data-preset="dowel_pin" onclick="applyFitPreset('dowel_pin')">📍 Chốt Định Vị (H7/h6)</button>
+                    <button type="button" class="smart-preset-btn" data-preset="keyway" onclick="applyFitPreset('keyway')">🔑 Kích Thước Rãnh Then</button>
+                </div>
+            </div>
+
             <div class="iso-shared-dashboard" style="display: flex; gap: 20px; align-items: stretch; background: #0f172a; border-radius: 12px; border: 1px solid #334155; padding: 20px; margin-bottom: 20px; flex-wrap: wrap;">
                 <!-- Kích thước danh nghĩa -->
                 <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
@@ -727,6 +751,58 @@
     
         <!-- Main Section: ROUGHNESS -->
         <div id="sectionRoughness" class="main-section" style="padding: 20px; color: #e2e8f0; font-family: sans-serif;">
+
+    <!-- Interactive Roughness Converter Widget -->
+    <div id="roughnessSmartConverter" style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #38bdf8; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 24px;">⚡</span>
+                <div>
+                    <h3 style="margin: 0; color: #38bdf8; font-size: 16px; font-weight: bold;">BỘ QUY ĐỔI ĐỘ NHÁM TƯƠNG TÁC 1 CHẠM</h3>
+                    <div style="font-size: 12px; color: #94a3b8;">Chọn hoặc nhập nhanh giá trị Ra để xem ngay Rz, Cấp ISO (N), Cấp TCVN (∇) và công nghệ gia công</div>
+                </div>
+            </div>
+            <!-- Quick Ra buttons -->
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <button type="button" class="gb-chip-btn" onclick="setInteractiveRoughness(0.4)">Ra 0.4</button>
+                <button type="button" class="gb-chip-btn active" onclick="setInteractiveRoughness(0.8)">Ra 0.8</button>
+                <button type="button" class="gb-chip-btn" onclick="setInteractiveRoughness(1.6)">Ra 1.6</button>
+                <button type="button" class="gb-chip-btn" onclick="setInteractiveRoughness(3.2)">Ra 3.2</button>
+                <button type="button" class="gb-chip-btn" onclick="setInteractiveRoughness(6.3)">Ra 6.3</button>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 15px;">
+            <div style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="color: #94a3b8; font-size: 11px; font-weight: bold; margin-bottom: 4px;">THÔNG SỐ Ra</div>
+                <div id="ir_ra_val" style="color: #38bdf8; font-size: 20px; font-weight: bold; font-family: monospace;">0.8 µm</div>
+                <div style="color: #64748b; font-size: 11px;">Sai lệch trung bình</div>
+            </div>
+            <div style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="color: #94a3b8; font-size: 11px; font-weight: bold; margin-bottom: 4px;">TƯƠNG ĐƯƠNG Rz</div>
+                <div id="ir_rz_val" style="color: #f59e0b; font-size: 20px; font-weight: bold; font-family: monospace;">3.2 µm</div>
+                <div style="color: #64748b; font-size: 11px;">Chiều cao mấp mô</div>
+            </div>
+            <div style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="color: #94a3b8; font-size: 11px; font-weight: bold; margin-bottom: 4px;">CẤP ISO 1302</div>
+                <div id="ir_n_val" style="color: #4ade80; font-size: 20px; font-weight: bold; font-family: monospace;">N6</div>
+                <div style="color: #64748b; font-size: 11px;">Ký hiệu quốc tế</div>
+            </div>
+            <div style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="color: #94a3b8; font-size: 11px; font-weight: bold; margin-bottom: 4px;">CẤP CŨ (TCVN/GOST)</div>
+                <div id="ir_tcvn_val" style="color: #c084fc; font-size: 20px; font-weight: bold; font-family: monospace;">∇9</div>
+                <div style="color: #64748b; font-size: 11px;">Ký hiệu tam giác</div>
+            </div>
+        </div>
+
+        <div style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 18px;">⚙️</span>
+            <div style="flex: 1;">
+                <span style="color: #94a3b8; font-size: 12px; font-weight: bold;">Phương pháp gia công điển hình: </span>
+                <span id="ir_tech_val" style="color: #f8fafc; font-size: 13px; font-weight: 500;">Mài tinh ngỗng trục lắp ổ lăn, mài răng bánh răng</span>
+            </div>
+        </div>
+    </div>
     
     <!-- Top Table Section -->
     <div style="background: #0f172a; border: 1px solid #334155; border-radius: 12px; margin-bottom: 20px; overflow: hidden;">
@@ -906,6 +982,60 @@
                         <div>
                             <h2 style="margin: 0; font-size: 20px; font-weight: bold; color: white;">THƯ VIỆN TRA CỨU 23 DÒNG HỘP SỐ CÔNG NGHIỆP TIÊU CHUẨN</h2>
                             <div style="font-size: 13px; color: #94a3b8; margin-top: 3px;">Đầy đủ cấu hình từ 1 Cấp, 2 Cấp, 3 Cấp đến 4 Cấp Siêu Tải Nặng (2.2 kW - 3.500 kW) &amp; Tư vấn kỹ thuật gia công dung sai, phương pháp lắp ráp quy chuẩn.</div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Filter Chips & Live Search Bar -->
+                    <div class="gb-filter-wrapper" id="gbFilterChipsContainer">
+                        <!-- Power Chips -->
+                        <div class="gb-filter-group">
+                            <span class="gb-filter-label">⚡ Công Suất:</span>
+                            <div class="gb-chips-row">
+                                <button type="button" class="gb-chip-btn active" onclick="filterGearboxByChip('power', 'all', this)">Tất cả</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('power', '<50', this)">&lt; 50 kW</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('power', '50-250', this)">50 - 250 kW</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('power', '250-1000', this)">250 - 1.000 kW</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('power', '>1000', this)">&gt; 1.000 kW</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Brand Chips -->
+                        <div class="gb-filter-group">
+                            <span class="gb-filter-label">🏭 Hãng SX:</span>
+                            <div class="gb-chips-row">
+                                <button type="button" class="gb-chip-btn active" onclick="filterGearboxByChip('brand', 'all', this)">Tất cả</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('brand', 'Flender', this)">Flender</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('brand', 'SEW', this)">SEW-Eurodrive</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('brand', 'Bonfiglioli', this)">Bonfiglioli</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('brand', 'Hansen', this)">Hansen</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('brand', 'Sumitomo', this)">Sumitomo</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('brand', 'Renk', this)">Renk</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('brand', 'David Brown', this)">David Brown</button>
+                            </div>
+                        </div>
+
+                        <!-- Application Chips -->
+                        <div class="gb-filter-group">
+                            <span class="gb-filter-label">🏗️ Ứng Dụng:</span>
+                            <div class="gb-chips-row">
+                                <button type="button" class="gb-chip-btn active" onclick="filterGearboxByChip('app', 'all', this)">Tất cả</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('app', 'Băng Tải', this)">Băng Tải</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('app', 'Nghiền Bi', this)">Nghiền Bi</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('app', 'Nghiền Đứng', this)">Nghiền Đứng VRM</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('app', 'Gầu Nâng', this)">Gầu Nâng</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('app', 'Lò Nung', this)">Lò Nung</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('app', 'Cán Ép', this)">Cán Ép Clinker</button>
+                                <button type="button" class="gb-chip-btn" onclick="filterGearboxByChip('app', 'Bơm Quạt', this)">Quạt / Bơm</button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Text Search in Gearboxes -->
+                        <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+                            <div style="position: relative; flex: 1;">
+                                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px;">🔎</span>
+                                <input type="text" id="gbQuickSearchInput" placeholder="Lọc nhanh tên hộp số, ứng dụng, công suất..." oninput="filterGearboxByText(this.value)" style="width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 8px 12px 8px 36px; color: #f8fafc; font-size: 13px; outline: none;">
+                            </div>
+                            <span id="gbFilterCount" style="padding: 6px 12px; background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; border-radius: 8px; color: #38bdf8; font-size: 12px; font-weight: bold; white-space: nowrap;">23/23 Hộp số</span>
                         </div>
                     </div>
 
@@ -7837,20 +7967,21 @@ window.runCalcOptimal = function() {
     }
     </script>
 
-    <script src="js/data.js?v=2.2.0"></script>
-    <script src="js/iso286_data.js?v=2.2.0"></script>
-    <script src="js/app.js?v=2.2.0"></script>
-    <script src="js/reverseLookup.js?v=2.2.0"></script>
-    <script src="js/toleranceCalculator.js?v=2.2.0"></script>
-    <script src="js/iso286_clean.js?v=2.2.0"></script>
-    <script src="js/keywayData.js?v=2.2.0"></script>
-    <script src="js/keywayCalculator.js?v=2.2.0"></script>
-    <script src="js/isoCalculatorV2.js?v=2.2.0"></script>
-    <script src="js/drawProfile.js?v=2.2.0"></script>
-    <script src="js/cameraUtils.js?v=2.2.0"></script>
-    <script src="js/fitApplications.js?v=2.2.0"></script>
-    <script src="js/isoUI.js?v=2.2.0"></script>
-    <script src="js/gearRatioCalculator.js?v=2.2.0"></script>
-    <script src="js/roughness.js?v=2.2.0"></script>
+    <script src="js/data.js?v=2.3.0"></script>
+    <script src="js/iso286_data.js?v=2.3.0"></script>
+    <script src="js/app.js?v=2.3.0"></script>
+    <script src="js/reverseLookup.js?v=2.3.0"></script>
+    <script src="js/toleranceCalculator.js?v=2.3.0"></script>
+    <script src="js/iso286_clean.js?v=2.3.0"></script>
+    <script src="js/keywayData.js?v=2.3.0"></script>
+    <script src="js/keywayCalculator.js?v=2.3.0"></script>
+    <script src="js/isoCalculatorV2.js?v=2.3.0"></script>
+    <script src="js/drawProfile.js?v=2.3.0"></script>
+    <script src="js/cameraUtils.js?v=2.3.0"></script>
+    <script src="js/fitApplications.js?v=2.3.0"></script>
+    <script src="js/isoUI.js?v=2.3.0"></script>
+    <script src="js/gearRatioCalculator.js?v=2.3.0"></script>
+    <script src="js/roughness.js?v=2.3.0"></script>
+    <script src="js/smartAssistant.js?v=2.3.0"></script>
 </body>
 </html>

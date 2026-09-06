@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cad-suite-v254-clean';
+const CACHE_NAME = 'cad-suite-v255-clean';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -21,7 +21,12 @@ const ASSETS_TO_CACHE = [
   '/js/keywayCalculator.js',
   '/js/keywayData.js',
   '/js/gearRatioCalculator.js',
+  '/js/gearRatioPro.js',
+  '/js/modulFinder.js',
   '/js/roughness.js',
+  '/js/gdtData.js',
+  '/js/gdtUI.js',
+  '/js/smartAssistant.js',
   '/assets/icons/app-icon-192x192.png',
   '/assets/icons/app-icon-512x512.png',
   '/assets/icons/favicon-32x32.png',

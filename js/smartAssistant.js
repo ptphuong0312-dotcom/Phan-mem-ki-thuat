@@ -75,7 +75,15 @@
         { type: 'gdt', id: 'perpendicularity', title: 'Độ Vuông Góc (Perpendicularity ⟂)', desc: 'Mặt tựa ổ bi so với đường tâm trục, vai trục bánh răng', tab: 'sectionGdt' },
         { type: 'gdt', id: 'circular_runout', title: 'Độ Đảo Hướng Tâm & Mặt Đầu (↗)', desc: 'Đo biến thiên đồng hồ so FIM quay 360° vành răng & cổ trục', tab: 'sectionGdt' },
         { type: 'gdt', id: 'position', title: 'Vị Trí Thực (True Position ⌖)', desc: 'Tâm các lỗ bu-lông, tâm trục bánh răng ăn khớp kèm MMC Ⓜ', tab: 'sectionGdt' },
-        { type: 'gdt', id: 'concentricity', title: 'Độ Đồng Tâm / Đồng Trục (◎)', desc: 'Cổ trục phớt chắn dầu so với ngỗng trục lắp vòng bi', tab: 'sectionGdt' }
+        { type: 'gdt', id: 'concentricity', title: 'Độ Đồng Tâm / Đồng Trục (◎)', desc: 'Cổ trục phớt chắn dầu so với ngỗng trục lắp vòng bi', tab: 'sectionGdt' },
+
+        // 06. Tỉ Số Truyền Bánh Răng Tối Ưu
+        { type: 'tisotruyen', id: 'gear_ratio', title: 'Bộ Tính Tỉ Số Truyền Bánh Răng (A/B) × (C/D)', desc: 'Tối ưu hóa tổ hợp 4 bánh răng theo tỉ số mục tiêu i và kho răng', tab: 'sectionGearRatio' },
+        { type: 'tisotruyen', id: 'gear_ratio_calc', title: 'Tính Tỉ Số Truyền Bánh Răng Thay Thế (Chạc Bánh Răng)', desc: 'Tìm cặp bánh răng ăn khớp với sai số siêu nhỏ < 10⁻⁸', tab: 'sectionGearRatio' },
+
+        // 07. Tra Cứu & Xác Định Modul Bánh Răng
+        { type: 'modul', id: 'modul_finder', title: 'Tra Cứu & Xác Định Modul Bánh Răng Hiệu Chỉnh', desc: 'Phân tích bước răng đo thực tế t (mm) tra Modul chuẩn (25.4 - 0.2) & góc áp lực α', tab: 'sectionModuleFinder' },
+        { type: 'modul', id: 'modul_dp', title: 'Tính Bước Răng Đo Thực Tế t & Quy Đổi DP (Diametral Pitch)', desc: 'Công thức t = m × π × cos(α) và kiểm tra 165 Modul chuẩn hóa', tab: 'sectionModuleFinder' }
     ];
 
     // -------------------------------------------------------------
@@ -127,6 +135,9 @@
                 if (item.type === 'dungsai') { badgeBg = '#c084fc'; badgeLabel = 'DUNG SAI'; }
                 else if (item.type === 'nham') { badgeBg = '#4ade80'; badgeLabel = 'ĐỘ NHÁM'; }
                 else if (item.type === 'hopso') { badgeBg = '#f59e0b'; badgeLabel = 'HỘP SỐ'; }
+                else if (item.type === 'gdt') { badgeBg = '#fb7185'; badgeLabel = 'GD&T'; }
+                else if (item.type === 'tisotruyen') { badgeBg = '#38bdf8'; badgeLabel = 'TỈ SỐ TRUYỀN'; }
+                else if (item.type === 'modul') { badgeBg = '#818cf8'; badgeLabel = 'MODUL'; }
 
                 html += `
                     <div class="smart-search-item" data-type="${item.type}" data-tab="${item.tab}" data-id="${item.id || ''}" data-query="${item.query || ''}" data-preset="${item.preset || ''}" data-ra="${item.ra || ''}">

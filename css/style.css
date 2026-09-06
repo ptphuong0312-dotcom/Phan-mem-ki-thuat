@@ -1795,33 +1795,8 @@ svg#toleranceSvg {
 }
 
 /* ========================================================
-   6. BEARING LOOKUP & GD&T MODULE STYLES
+   6. GD&T MODULE STYLES (ISO 1101 / ASME Y14.5)
    ======================================================== */
-
-/* Bearing List Item */
-.bearing-list-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 10px 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.bearing-list-item:hover {
-    background: #243248;
-    border-color: #38bdf8;
-    transform: translateX(2px);
-}
-
-.bearing-list-item.active {
-    background: linear-gradient(145deg, #1e293b, #1e3a8a);
-    border-color: #38bdf8;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
-}
 
 /* GD&T Symbol Grid & Cards */
 .gdt-symbol-grid {

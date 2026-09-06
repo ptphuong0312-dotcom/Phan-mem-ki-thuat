@@ -69,15 +69,6 @@
         { type: 'hopso', id: 'gb11', title: '22. Phân dòng công suất Flender DUORED (1.500 - 3.500 kW)', desc: 'Máy nghiền bi xi măng công suất khủng', tab: 'sectionGearbox' },
         { type: 'hopso', id: 'gb23', title: '23. Nón - Trụ 4 cấp Flender B4SH 18 (250 - 630 kW)', desc: 'Gầu nâng clinker cao tầng (Tích hợp Backstop)', tab: 'sectionGearbox' },
 
-        // Vòng bi / Bạc đạn (Bearings)
-        { type: 'bearing', id: '6205', title: 'Vòng bi 6205 (⌀25 × ⌀52 × 15 mm)', desc: 'Bi cầu rãnh sâu phổ biến, C=14.8kN, khe hở CN/C3', tab: 'sectionBearing' },
-        { type: 'bearing', id: '6208', title: 'Vòng bi 6208 (⌀40 × ⌀80 × 18 mm)', desc: 'Bi cầu ngỗng trục 40mm, C=32.5kN, C3 cho hộp số', tab: 'sectionBearing' },
-        { type: 'bearing', id: '6309', title: 'Vòng bi 6309 (⌀45 × ⌀100 × 25 mm)', desc: 'Bi cầu tải nặng động cơ điện & quạt lò, C=55.3kN', tab: 'sectionBearing' },
-        { type: 'bearing', id: '22220', title: 'Vòng bi 22220 (⌀100 × ⌀180 × 46 mm)', desc: 'Bi tang trống tự lựa 2 dãy hộp số công nghiệp nặng, C=440kN', tab: 'sectionBearing' },
-        { type: 'bearing', id: '22322', title: 'Vòng bi 22322 (⌀110 × ⌀240 × 80 mm)', desc: 'Bi tang trống siêu tải máy nghiền & gầu nâng, C=1.020kN', tab: 'sectionBearing' },
-        { type: 'bearing', id: 'NU 312', title: 'Vòng bi NU 312 (⌀60 × ⌀130 × 31 mm)', desc: 'Bi đũa trụ đỡ tải trọng hướng tâm cực lớn, C=156kN', tab: 'sectionBearing' },
-        { type: 'bearing', id: '30208', title: 'Vòng bi 30208 (⌀40 × ⌀80 × 19.75 mm)', desc: 'Bi côn chịu tải hỗn hợp dọc trục & hướng tâm, C=69.5kN', tab: 'sectionBearing' },
-
         // GD&T (Dung sai hình học & vị trí)
         { type: 'gdt', id: 'flatness', title: 'Độ Phẳng (Flatness ⏢ - ISO 1101)', desc: 'Kiểm tra mặt phân khuôn hộp số, bàn máp & rà đồng hồ so', tab: 'sectionGdt' },
         { type: 'gdt', id: 'straightness', title: 'Độ Thẳng (Straightness ⎯ - ISO 1101)', desc: 'Đường sinh trục dài, then bằng, sống trượt máy', tab: 'sectionGdt' },
@@ -206,12 +197,6 @@
                     window.switchGearboxSelect(gbId);
                     document.getElementById(gbId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-            }
-        } else if (type === 'bearing') {
-            const brgCode = el.getAttribute('data-id');
-            if (brgCode && window.selectBearing) {
-                window.selectBearing(brgCode);
-                document.getElementById('bearingDetailCard')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         } else if (type === 'gdt') {
             const gdtId = el.getAttribute('data-id');
@@ -533,7 +518,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         initSmartSearch();
 
-        if (window.initBearingModule) window.initBearingModule();
         if (window.initGdtModule) window.initGdtModule();
 
         // Restore active module if saved

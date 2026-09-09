@@ -11,7 +11,7 @@
     <meta http-equiv="Expires" content="0">
     <script>
       (function() {
-        const CURRENT_VERSION = 'v2.5.5_20260906_7_MODULES';
+        const CURRENT_VERSION = 'v2.5.6_20260909_KEYWAY_MOBILE_FIX';
         if (localStorage.getItem('app_installed_version') !== CURRENT_VERSION) {
           localStorage.setItem('app_installed_version', CURRENT_VERSION);
           if ('caches' in window) {
@@ -32,11 +32,11 @@
     </script>
     
     <!-- Favicon, PWA & iOS Support -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2.5.5">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png?v=2.5.5">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png?v=2.5.5">
-    <link rel="apple-touch-icon" href="assets/icons/app-icon-192x192.png?v=2.5.5">
-    <link rel="manifest" href="manifest.json?v=2.5.5">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2.5.6">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png?v=2.5.6">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png?v=2.5.6">
+    <link rel="apple-touch-icon" href="assets/icons/app-icon-192x192.png?v=2.5.6">
+    <link rel="manifest" href="manifest.json?v=2.5.6">
     <meta name="theme-color" content="#070a13">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -70,9 +70,9 @@
     </script>
     
     <!-- CSS Theme & Styles -->
-    <link rel="stylesheet" href="assets/css/common-theme.css?v=2.5.5">
-    <link rel="stylesheet" href="css/style.css?v=2.5.5">
-    <link rel="stylesheet" href="css/roughness.css?v=2.5.5">
+    <link rel="stylesheet" href="assets/css/common-theme.css?v=2.5.6">
+    <link rel="stylesheet" href="css/style.css?v=2.5.6">
+    <link rel="stylesheet" href="css/roughness.css?v=2.5.6">
 </head>
 <body class="bg-[#070a13] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white" style="background-color: #070a13; color: #f1f5f9; min-height: 100vh; display: flex; flex-direction: column;">
 
@@ -85,7 +85,7 @@
         <div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
             <div style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="switchMainModule('sectionPortal')">
                 <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #06b6d4, #2563eb, #4f46e5); padding: 2px; box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="assets/icons/app-icon-192x192.png?v=2.5.5" alt="CAD Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                    <img src="assets/icons/app-icon-192x192.png?v=2.5.6" alt="CAD Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
                 </div>
                 <div>
                     <h1 style="font-size: 19px; font-weight: 800; tracking: -0.025em; background: linear-gradient(to right, #ffffff, #e2e8f0, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; line-height: 1.2;">
@@ -696,7 +696,7 @@
 
             <div class="iso-shared-dashboard" style="display: flex; gap: 20px; align-items: stretch; background: #0f172a; border-radius: 12px; border: 1px solid #334155; padding: 20px; margin-bottom: 20px; flex-wrap: wrap;">
                 <!-- Kích thước danh nghĩa -->
-                <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+                <div style="flex: 1; min-width: 260px; display: flex; flex-direction: column; justify-content: center;">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
                         <svg style="width: 20px; height: 20px; color: #38bdf8;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                         <span style="color: #e2e8f0; font-weight: 500; font-size: 15px;">Kích thước đường kính danh nghĩa (d, D):</span>
@@ -707,8 +707,8 @@
                     </div>
                 </div>
                 
-                <!-- Keyway Summary -->
-                <div style="flex: 2; min-width: 400px; border: 1px solid #334155; border-radius: 12px; padding: 15px; display: flex; gap: 15px; background: #1e293b; flex-wrap: wrap;">
+                <!-- Keyway Summary (Clickable to switch tab) -->
+                <div style="flex: 2; min-width: 260px; border: 1px solid #334155; border-radius: 12px; padding: 15px; display: flex; gap: 15px; background: #1e293b; flex-wrap: wrap; cursor: pointer; transition: border-color 0.2s;" onclick="switchIsoTab('keywayPanel')" title="Nhấn để xem chi tiết Then Bằng">
                     <!-- Icon and title -->
                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; min-width: 180px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -885,26 +885,26 @@
 
                     <div id="kwContentArea" style="display: none; padding-top: 10px;">
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="keyway-grid-layout">
                             
                             <!-- LEFT COL -->
                             <div style="display: flex; flex-direction: column; gap: 20px;">
                                 <!-- Thông số then tiêu chuẩn -->
                                 <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid #334155; border-radius: 12px; padding: 20px;">
                                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid #38bdf8; display: flex; align-items: center; justify-content: center; color: #38bdf8; font-size: 14px; font-weight: bold font-style: italic;">i</div>
+                                        <div style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid #38bdf8; display: flex; align-items: center; justify-content: center; color: #38bdf8; font-size: 14px; font-weight: bold; font-style: italic;">i</div>
                                         <h3 style="margin: 0; color: #e2e8f0; font-size: 16px;">Thông số then tiêu chuẩn</h3>
                                     </div>
                                     <p id="kw_d_range" style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin-bottom: 20px;">
                                         Đường kính trục của bạn nằm trong khoảng: <span style="color:#38bdf8; font-weight:bold;">d > 110 ÷ 130 mm</span>. Dưới đây là kích thước then bằng tiêu chuẩn tương ứng (DIN 6885-1 / ISO 773):
                                     </p>
                                     
-                                    <div style="display: flex; gap: 15px; margin-bottom: 25px;">
-                                        <div style="flex: 1; background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 8px; border: 1px solid #1e293b;">
+                                    <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
+                                        <div style="flex: 1; min-width: 120px; background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 8px; border: 1px solid #1e293b;">
                                             <div style="color: #94a3b8; font-size: 11px; text-transform: uppercase; font-weight: 600; margin-bottom: 5px;">CHIỀU RỘNG THEN (B)</div>
                                             <div id="kw_b" style="color: white; font-size: 24px; font-weight: bold;">32 mm</div>
                                         </div>
-                                        <div style="flex: 1; background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 8px; border: 1px solid #1e293b;">
+                                        <div style="flex: 1; min-width: 120px; background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 8px; border: 1px solid #1e293b;">
                                             <div style="color: #94a3b8; font-size: 11px; text-transform: uppercase; font-weight: 600; margin-bottom: 5px;">CHIỀU CAO THEN (H)</div>
                                             <div id="kw_h" style="color: white; font-size: 24px; font-weight: bold;">18 mm</div>
                                         </div>
@@ -929,9 +929,9 @@
                                 <!-- Sơ đồ đo rãnh then chuẩn -->
                                 <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid #334155; border-radius: 12px; padding: 20px;">
                                     <h3 style="margin: 0 0 20px 0; color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">SƠ ĐỒ ĐO RÃNH THEN CHUẨN</h3>
-                                    <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(51, 65, 85, 0.5); border-radius: 8px; padding: 30px 10px; display: flex; justify-content: center;">
-                                        <!-- SVG Graphics -->
-                                        <svg width="300" height="150" viewBox="0 0 300 150">
+                                    <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(51, 65, 85, 0.5); border-radius: 8px; padding: 30px 10px; display: flex; justify-content: center; overflow-x: auto;">
+                                        <!-- SVG Graphics Responsive -->
+                                        <svg style="width: 100%; max-width: 300px; height: auto;" viewBox="0 0 300 150">
                                             <!-- TRỤC -->
                                             <g transform="translate(70, 75)">
                                                 <circle cx="0" cy="0" r="45" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 2" />
@@ -967,13 +967,13 @@
                                 <p style="color: #94a3b8; font-size: 13px; margin: 0;">Chọn xem các chế độ lắp ghép tiêu chuẩn được khuyến nghị hoặc tự động cấu hình miền dung sai.</p>
                                 
                                 <div style="display: flex; border-bottom: 1px solid #334155; margin-bottom: 10px;">
-                                    <div style="flex: 1; text-align: center; padding: 10px; color: #38bdf8; font-weight: bold; border-bottom: 2px solid #38bdf8; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <div style="flex: 1; text-align: center; padding: 10px; color: #38bdf8; font-weight: bold; border-bottom: 2px solid #38bdf8; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: default;">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                         Gợi ý lắp tiêu chuẩn
                                     </div>
-                                    <div style="flex: 1; text-align: center; padding: 10px; color: #94a3b8; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <div style="flex: 1; text-align: center; padding: 10px; color: #94a3b8; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: color 0.2s;" onclick="const bVal = parseFloat(document.getElementById('kw_b')?.textContent); if(bVal) { const nom = document.getElementById('calcNominal'); if(nom) { nom.value = bVal; if(window.runToleranceCalc) window.runToleranceCalc(); } } if(window.switchIsoTab) window.switchIsoTab('calcPanel');" title="Chuyển sang tab Dung sai Lỗ & Trục với kích thước danh nghĩa b của then">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                                        Tự cấu hình thủ công
+                                        Tự cấu hình thủ công ↗
                                     </div>
                                 </div>
 
@@ -985,13 +985,13 @@
                                     </div>
                                     <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Ứng dụng tiêu chuẩn, then định vị tốt trên trục, trượt êm trên lỗ bánh răng/puly.</p>
                                     
-                                    <div style="display: flex; gap: 15px;">
-                                        <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                    <div class="keyway-fit-pair" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                        <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                             <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Trục (b N9)</div>
                                             <div id="kw_trung_gian_shaft_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                             <div id="kw_trung_gian_shaft_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
                                         </div>
-                                        <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                        <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                             <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Lỗ (b Js9)</div>
                                             <div id="kw_trung_gian_hole_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                             <div id="kw_trung_gian_hole_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
@@ -1007,13 +1007,13 @@
                                     </div>
                                     <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Sử dụng cho các bánh răng di trượt dọc trục (ly hợp, bánh răng di trượt hộp số).</p>
                                     
-                                    <div style="display: flex; gap: 15px;">
-                                        <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                    <div class="keyway-fit-pair" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                        <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                             <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Trục (b h9)</div>
                                             <div id="kw_long_truot_shaft_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                             <div id="kw_long_truot_shaft_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
                                         </div>
-                                        <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                        <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                             <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Lỗ (b D10)</div>
                                             <div id="kw_long_truot_hole_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                             <div id="kw_long_truot_hole_dev" style="color: #10b981; font-size: 12px; margin-top: 2px;">-</div>
@@ -1029,13 +1029,13 @@
                                     </div>
                                     <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Dành cho truyền mô-men quay rất lớn, chịu tải va đập và đảo chiều liên tục.</p>
                                     
-                                    <div style="display: flex; gap: 15px;">
-                                        <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                    <div class="keyway-fit-pair" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                        <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                             <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Trục (b P9)</div>
                                             <div id="kw_chat_shaft_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                             <div id="kw_chat_shaft_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
                                         </div>
-                                        <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                        <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                             <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Lỗ (b P9)</div>
                                             <div id="kw_chat_hole_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                             <div id="kw_chat_hole_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
@@ -1058,13 +1058,13 @@
                                         </div>
                                         <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Chống rơ tốt hơn ở rãnh moay-ơ khi truyền mô-men đảo chiều liên tục ở tải trọng nhỏ và vừa.</p>
                                         
-                                        <div style="display: flex; gap: 15px;">
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                        <div class="keyway-fit-pair" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Trục (b N9)</div>
                                                 <div id="kw_trung_gian_chat_shaft_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_trung_gian_chat_shaft_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
                                             </div>
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Lỗ (b N9)</div>
                                                 <div id="kw_trung_gian_chat_hole_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_trung_gian_chat_hole_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
@@ -1080,13 +1080,13 @@
                                         </div>
                                         <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Rãnh lỗ moay-ơ H9 giúp dễ lồng bánh răng/puly vào trục bằng tay dễ dàng, thuận tiện bảo trì.</p>
                                         
-                                        <div style="display: flex; gap: 15px;">
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                        <div class="keyway-fit-pair" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Trục (b N9)</div>
                                                 <div id="kw_trung_gian_de_shaft_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_trung_gian_de_shaft_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
                                             </div>
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Lỗ (b H9)</div>
                                                 <div id="kw_trung_gian_de_hole_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_trung_gian_de_hole_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
@@ -1102,13 +1102,13 @@
                                         </div>
                                         <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Then ép rất chặt vào trục (P9) tránh văng/lắc, nhưng rãnh moay-ơ (Js9) cho phép ép moay-ơ vào nhẹ nhàng hơn.</p>
                                         
-                                        <div style="display: flex; gap: 15px;">
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                        <div class="keyway-fit-pair" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Trục (b P9)</div>
                                                 <div id="kw_chat_truc_de_moayo_shaft_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_chat_truc_de_moayo_shaft_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
                                             </div>
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Lỗ (b Js9)</div>
                                                 <div id="kw_chat_truc_de_moayo_hole_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_chat_truc_de_moayo_hole_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
@@ -1124,13 +1124,13 @@
                                         </div>
                                         <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Trượt dọc trục chính xác với khe hở nhỏ và độ rơ lắc ít hơn D10 (bánh răng di trượt chính xác, ly hợp vấu).</p>
                                         
-                                        <div style="display: flex; gap: 15px;">
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                        <div class="keyway-fit-pair" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Trục (b h9)</div>
                                                 <div id="kw_truot_chinh_xac_shaft_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_truot_chinh_xac_shaft_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
                                             </div>
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Lỗ (b F8)</div>
                                                 <div id="kw_truot_chinh_xac_hole_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_truot_chinh_xac_hole_dev" style="color: #10b981; font-size: 12px; margin-top: 2px;">-</div>
@@ -1146,13 +1146,13 @@
                                         </div>
                                         <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Khe hở rất rộng, tránh bị kẹt do sai số tích lũy khoảng cách khi lắp nhiều then trên cùng 1 trục hoặc hành trình trượt dài.</p>
                                         
-                                        <div style="display: flex; gap: 15px;">
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                        <div class="keyway-fit-pair" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Trục (b h9)</div>
                                                 <div id="kw_truot_rong_shaft_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_truot_rong_shaft_dev" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">-</div>
                                             </div>
-                                            <div style="flex: 1; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
+                                            <div class="keyway-fit-box" style="flex: 1; min-width: 130px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: rgba(30, 41, 59, 0.4);">
                                                 <div style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Rãnh Lỗ (b C11)</div>
                                                 <div id="kw_truot_rong_hole_dim" style="color: #38bdf8; font-weight: bold; font-size: 14px;">-</div>
                                                 <div id="kw_truot_rong_hole_dev" style="color: #10b981; font-size: 12px; margin-top: 2px;">-</div>
@@ -8797,25 +8797,25 @@ window.runCalcOptimal = function() {
     }
     </script>
 
-    <script src="js/data.js?v=2.5.5"></script>
-    <script src="js/iso286_data.js?v=2.5.5"></script>
-    <script src="js/app.js?v=2.5.5"></script>
-    <script src="js/reverseLookup.js?v=2.5.5"></script>
-    <script src="js/toleranceCalculator.js?v=2.5.5"></script>
-    <script src="js/iso286_clean.js?v=2.5.5"></script>
-    <script src="js/keywayData.js?v=2.5.5"></script>
-    <script src="js/keywayCalculator.js?v=2.5.5"></script>
-    <script src="js/isoCalculatorV2.js?v=2.5.5"></script>
-    <script src="js/drawProfile.js?v=2.5.5"></script>
-    <script src="js/cameraUtils.js?v=2.5.5"></script>
-    <script src="js/fitApplications.js?v=2.5.5"></script>
-    <script src="js/isoUI.js?v=2.5.5"></script>
-    <script src="js/gearRatioCalculator.js?v=2.5.5"></script>
-    <script src="js/gearRatioPro.js?v=2.5.5"></script>
-    <script src="js/modulFinder.js?v=2.5.5"></script>
-    <script src="js/roughness.js?v=2.5.5"></script>
-    <script src="js/gdtData.js?v=2.5.5"></script>
-    <script src="js/gdtUI.js?v=2.5.5"></script>
-    <script src="js/smartAssistant.js?v=2.5.5"></script>
+    <script src="js/data.js?v=2.5.6"></script>
+    <script src="js/iso286_data.js?v=2.5.6"></script>
+    <script src="js/app.js?v=2.5.6"></script>
+    <script src="js/reverseLookup.js?v=2.5.6"></script>
+    <script src="js/toleranceCalculator.js?v=2.5.6"></script>
+    <script src="js/iso286_clean.js?v=2.5.6"></script>
+    <script src="js/keywayData.js?v=2.5.6"></script>
+    <script src="js/keywayCalculator.js?v=2.5.6"></script>
+    <script src="js/isoCalculatorV2.js?v=2.5.6"></script>
+    <script src="js/drawProfile.js?v=2.5.6"></script>
+    <script src="js/cameraUtils.js?v=2.5.6"></script>
+    <script src="js/fitApplications.js?v=2.5.6"></script>
+    <script src="js/isoUI.js?v=2.5.6"></script>
+    <script src="js/gearRatioCalculator.js?v=2.5.6"></script>
+    <script src="js/gearRatioPro.js?v=2.5.6"></script>
+    <script src="js/modulFinder.js?v=2.5.6"></script>
+    <script src="js/roughness.js?v=2.5.6"></script>
+    <script src="js/gdtData.js?v=2.5.6"></script>
+    <script src="js/gdtUI.js?v=2.5.6"></script>
+    <script src="js/smartAssistant.js?v=2.5.6"></script>
 </body>
 </html>

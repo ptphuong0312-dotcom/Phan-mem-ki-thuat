@@ -1930,3 +1930,29 @@ svg#toleranceSvg {
     color: #fb923c !important;
 }
 
+/* ========================================================
+   8. RESPONSIVE KEYWAY (THEN BẰNG DIN 6885-1) LAYOUT
+   ======================================================== */
+.keyway-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .keyway-grid-layout {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.keyway-fit-pair {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.keyway-fit-box {
+    flex: 1;
+    min-width: 130px;
+}

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cad-suite-v256-clean';
+const CACHE_NAME = 'cad-suite-v257-clean';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

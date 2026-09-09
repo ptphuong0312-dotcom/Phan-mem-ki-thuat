@@ -458,7 +458,7 @@
 
         // 3. Sync quick select dropdown
         const quickSelect = document.getElementById('moduleQuickSelect');
-        if (quickSelect && moduleId !== 'sectionPortal') {
+        if (quickSelect) {
             quickSelect.value = moduleId;
         }
 

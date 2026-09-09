@@ -11,7 +11,7 @@
     <meta http-equiv="Expires" content="0">
     <script>
       (function() {
-        const CURRENT_VERSION = 'v2.5.6_20260909_KEYWAY_MOBILE_FIX';
+        const CURRENT_VERSION = 'v2.5.7_20260909_HEADER_NAV_UPDATE';
         if (localStorage.getItem('app_installed_version') !== CURRENT_VERSION) {
           localStorage.setItem('app_installed_version', CURRENT_VERSION);
           if ('caches' in window) {
@@ -32,11 +32,11 @@
     </script>
     
     <!-- Favicon, PWA & iOS Support -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2.5.6">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png?v=2.5.6">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png?v=2.5.6">
-    <link rel="apple-touch-icon" href="assets/icons/app-icon-192x192.png?v=2.5.6">
-    <link rel="manifest" href="manifest.json?v=2.5.6">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2.5.7">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png?v=2.5.7">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png?v=2.5.7">
+    <link rel="apple-touch-icon" href="assets/icons/app-icon-192x192.png?v=2.5.7">
+    <link rel="manifest" href="manifest.json?v=2.5.7">
     <meta name="theme-color" content="#070a13">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -70,9 +70,9 @@
     </script>
     
     <!-- CSS Theme & Styles -->
-    <link rel="stylesheet" href="assets/css/common-theme.css?v=2.5.6">
-    <link rel="stylesheet" href="css/style.css?v=2.5.6">
-    <link rel="stylesheet" href="css/roughness.css?v=2.5.6">
+    <link rel="stylesheet" href="assets/css/common-theme.css?v=2.5.7">
+    <link rel="stylesheet" href="css/style.css?v=2.5.7">
+    <link rel="stylesheet" href="css/roughness.css?v=2.5.7">
 </head>
 <body class="bg-[#070a13] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white" style="background-color: #070a13; color: #f1f5f9; min-height: 100vh; display: flex; flex-direction: column;">
 
@@ -85,7 +85,7 @@
         <div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
             <div style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="switchMainModule('sectionPortal')">
                 <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #06b6d4, #2563eb, #4f46e5); padding: 2px; box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="assets/icons/app-icon-192x192.png?v=2.5.6" alt="CAD Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                    <img src="assets/icons/app-icon-192x192.png?v=2.5.7" alt="CAD Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
                 </div>
                 <div>
                     <h1 style="font-size: 19px; font-weight: 800; tracking: -0.025em; background: linear-gradient(to right, #ffffff, #e2e8f0, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; line-height: 1.2;">
@@ -99,15 +99,21 @@
 
             <!-- Header Quick Stats & Actions -->
             <div style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: #94a3b8; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 8px; background: rgba(15, 23, 42, 0.8); padding: 6px 12px; border-radius: 8px; border: 1px solid #1e293b;">
-                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #34d399; display: inline-block; box-shadow: 0 0 8px #34d399;"></span>
-                    <span style="color: #e2e8f0; font-weight: 500;">Antigravity Standard</span>
-                </div>
-                <div class="hidden sm:flex" style="display: flex; align-items: center; gap: 8px; background: rgba(15, 23, 42, 0.8); padding: 6px 12px; border-radius: 8px; border: 1px solid #1e293b;">
-                    <i class="fa-solid fa-microchip" style="color: #f97316;"></i>
-                    <span style="color: #cbd5e1;">7 Module • ~22K Dòng Code</span>
-                </div>
-                <button onclick="forceUpdateApp()" style="display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.8); border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s;" title="Xóa cache và cập nhật">
+                <button type="button" onclick="switchMainModule('sectionPortal')" style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; background: #0f172a; border: 1px solid #38bdf8; color: #f1f5f9; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(56, 189, 248, 0.15);" title="Về Trang Chủ Portal">
+                    <i class="fa-solid fa-arrow-left" style="color: #38bdf8;"></i>
+                    <span>Trang Chủ Portal</span>
+                </button>
+                <select id="moduleQuickSelect" onchange="if(this.value) switchMainModule(this.value);" style="background: #0f172a; border: 1px solid #334155; color: #cbd5e1; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 7px 12px; outline: none; cursor: pointer; max-width: 250px;" title="Mục lục danh sách Module">
+                    <option value="sectionPortal">📋 Mục Lục (7 Module)</option>
+                    <option value="sectionRen">🔩 01. Thông Số Ren Tiêu Chuẩn</option>
+                    <option value="sectionTolerance">📐 02. Dung Sai Lắp Ghép ISO 286</option>
+                    <option value="sectionRoughness">🔍 03. Độ Nhám Bề Mặt ISO 1302</option>
+                    <option value="sectionGearbox">⚙️ 04. Thư Viện Hộp Số Công Nghiệp</option>
+                    <option value="sectionGdt">📐 05. GD&amp;T Dung Sai Hình Học</option>
+                    <option value="sectionGearRatio">⚙️ 06. Bộ Tính Tỉ Số Truyền Bánh Răng</option>
+                    <option value="sectionModuleFinder">📏 07. Tra Cứu &amp; Xác Định Modul</option>
+                </select>
+                <button onclick="forceUpdateApp()" style="display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.8); border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; font-weight: 600; padding: 7px 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s;" title="Xóa cache và cập nhật">
                     <i class="fa-solid fa-arrows-rotate"></i>
                     <span>Cập Nhật</span>
                 </button>
@@ -117,43 +123,6 @@
 
     <!-- Main Container -->
     <main class="container main-content-wrapper" id="mainContent" style="width: 100%; max-width: 1280px; margin: 0 auto; padding: 20px 16px 40px 16px; flex: 1; position: relative; z-index: 10;">
-
-        <!-- UNIFIED IN-MODULE NAVIGATION BAR (Shown inside modules, hidden on portal home) -->
-        <div id="inModuleNav" class="no-print" style="margin-bottom: 20px; display: none; flex-direction: column; gap: 14px; border-bottom: 1px solid rgba(30, 41, 59, 0.8); padding-bottom: 16px;">
-            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
-                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
-                    <button type="button" onclick="switchMainModule('sectionPortal')" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; background: #0f172a; border: 1px solid #38bdf8; color: #f1f5f9; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(56, 189, 248, 0.15);">
-                        <i class="fa-solid fa-arrow-left" style="color: #38bdf8;"></i>
-                        <span>Trang Chủ Portal</span>
-                    </button>
-                    <select id="moduleQuickSelect" onchange="if(this.value) switchMainModule(this.value);" style="background: #0f172a; border: 1px solid #334155; color: #cbd5e1; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 8px 12px; outline: none; cursor: pointer;">
-                        <option value="sectionRen">🔩 01. Thông Số Ren Tiêu Chuẩn</option>
-                        <option value="sectionTolerance">📐 02. Dung Sai Lắp Ghép ISO 286</option>
-                        <option value="sectionRoughness">🔍 03. Độ Nhám Bề Mặt ISO 1302</option>
-                        <option value="sectionGearbox">⚙️ 04. Thư Viện Hộp Số Công Nghiệp</option>
-                        <option value="sectionGdt">📐 05. GD&amp;T Dung Sai Hình Học</option>
-                        <option value="sectionGearRatio">⚙️ 06. Bộ Tính Tỉ Số Truyền Bánh Răng</option>
-                        <option value="sectionModuleFinder">📏 07. Tra Cứu &amp; Xác Định Modul</option>
-                    </select>
-                    <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 9999px; background: #0f172a; border: 1px solid #1e293b; font-size: 11px; color: #cbd5e1;">
-                        <span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
-                        <span>Hệ thống kỹ thuật SirPhuong</span>
-                    </span>
-                </div>
-
-
-            </div>
-
-            <!-- Smart Universal Search Bar -->
-            <div class="smart-search-wrapper" id="smartSearchBarContainer" style="margin: 0;">
-                <div class="smart-search-box">
-                    <span class="smart-search-icon">🔍</span>
-                    <input type="text" id="smartGlobalInput" class="smart-search-input" placeholder="Tìm nhanh thông minh (vd: M16, 30H7/k6, Ra 0.8, B3SH 18, lò nung...)" autocomplete="off">
-                    <span class="smart-search-badge">/ hoặc Ctrl+K</span>
-                </div>
-                <div id="smartSearchDropdown" class="smart-search-dropdown"></div>
-            </div>
-        </div>
 
         <!-- SECTION PORTAL (HOMEPAGE LIKE banh-rang.vercel.app) -->
         <div id="sectionPortal" class="main-section active">
@@ -8797,25 +8766,25 @@ window.runCalcOptimal = function() {
     }
     </script>
 
-    <script src="js/data.js?v=2.5.6"></script>
-    <script src="js/iso286_data.js?v=2.5.6"></script>
-    <script src="js/app.js?v=2.5.6"></script>
-    <script src="js/reverseLookup.js?v=2.5.6"></script>
-    <script src="js/toleranceCalculator.js?v=2.5.6"></script>
-    <script src="js/iso286_clean.js?v=2.5.6"></script>
-    <script src="js/keywayData.js?v=2.5.6"></script>
-    <script src="js/keywayCalculator.js?v=2.5.6"></script>
-    <script src="js/isoCalculatorV2.js?v=2.5.6"></script>
-    <script src="js/drawProfile.js?v=2.5.6"></script>
-    <script src="js/cameraUtils.js?v=2.5.6"></script>
-    <script src="js/fitApplications.js?v=2.5.6"></script>
-    <script src="js/isoUI.js?v=2.5.6"></script>
-    <script src="js/gearRatioCalculator.js?v=2.5.6"></script>
-    <script src="js/gearRatioPro.js?v=2.5.6"></script>
-    <script src="js/modulFinder.js?v=2.5.6"></script>
-    <script src="js/roughness.js?v=2.5.6"></script>
-    <script src="js/gdtData.js?v=2.5.6"></script>
-    <script src="js/gdtUI.js?v=2.5.6"></script>
-    <script src="js/smartAssistant.js?v=2.5.6"></script>
+    <script src="js/data.js?v=2.5.7"></script>
+    <script src="js/iso286_data.js?v=2.5.7"></script>
+    <script src="js/app.js?v=2.5.7"></script>
+    <script src="js/reverseLookup.js?v=2.5.7"></script>
+    <script src="js/toleranceCalculator.js?v=2.5.7"></script>
+    <script src="js/iso286_clean.js?v=2.5.7"></script>
+    <script src="js/keywayData.js?v=2.5.7"></script>
+    <script src="js/keywayCalculator.js?v=2.5.7"></script>
+    <script src="js/isoCalculatorV2.js?v=2.5.7"></script>
+    <script src="js/drawProfile.js?v=2.5.7"></script>
+    <script src="js/cameraUtils.js?v=2.5.7"></script>
+    <script src="js/fitApplications.js?v=2.5.7"></script>
+    <script src="js/isoUI.js?v=2.5.7"></script>
+    <script src="js/gearRatioCalculator.js?v=2.5.7"></script>
+    <script src="js/gearRatioPro.js?v=2.5.7"></script>
+    <script src="js/modulFinder.js?v=2.5.7"></script>
+    <script src="js/roughness.js?v=2.5.7"></script>
+    <script src="js/gdtData.js?v=2.5.7"></script>
+    <script src="js/gdtUI.js?v=2.5.7"></script>
+    <script src="js/smartAssistant.js?v=2.5.7"></script>
 </body>
 </html>
